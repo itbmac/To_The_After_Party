@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		rigidbody2D.velocity = new Vector2(VX, VY);
 
-		RestrictMovement();
+		//RestrictMovement();
 	}
 
 	void RestrictMovement() {
