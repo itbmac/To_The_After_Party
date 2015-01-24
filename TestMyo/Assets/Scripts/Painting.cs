@@ -40,8 +40,6 @@ public class Painting : MonoBehaviour {
     }
   
     void Update() {
-
-		ThalmicMyo thalmicMyo = MyArm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
 		if (thalmicMyo.pose != _lastPose) {
 			_lastPose = thalmicMyo.pose;
 			if (thalmicMyo.pose == Thalmic.Myo.Pose.Fist) {
@@ -49,8 +47,12 @@ public class Painting : MonoBehaviour {
 				thalmicMyo.Vibrate(VibrationType.Short);
 			}	
 		}
-
+		
 		Ray r  = new Ray(
+			MyArm.transform.position,
+			MyArm.transform.forward
+		);
+		Debug.DrawRay(
 			MyArm.transform.position,
 			MyArm.transform.forward
 		);

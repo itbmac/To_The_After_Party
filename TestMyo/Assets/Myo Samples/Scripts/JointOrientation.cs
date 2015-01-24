@@ -86,10 +86,7 @@ public class JointOrientation : MonoBehaviour
         // Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
         // the orientation of the joint.
         transform.rotation = _antiYaw * antiRoll * Quaternion.LookRotation (myo.transform.forward);
-        
-//		Debug.Log (transform.rotation * (thalmicMyo.accelerometer));
-//		Debug.DrawRay(transform.position, thalmicMyo.accelerometer * 3, Color.blue);
-		Debug.DrawRay(transform.position, transform.rotation * thalmicMyo.accelerometer * 3, Color.green, 0.1f);
+
 		Accel = transform.rotation * thalmicMyo.accelerometer;
 
         // The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
