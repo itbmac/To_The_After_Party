@@ -22,6 +22,8 @@ public class FollowPlayer : MonoBehaviour{
 	public float DrunkWalkAmount = 0.01f;
 	public float DrunkWalkOffset = 0.0f;
 
+	public bool InContactWithPlayer = false;
+
 	private PolyNavAgent _agent;
 	public PolyNavAgent agent{
 		get
@@ -52,11 +54,12 @@ public class FollowPlayer : MonoBehaviour{
 	}
 
 	void SetDestination() {
-		if ((oldPlayerPosition == null) || 
+		if (!InContactWithPlayer &&
+		    ((oldPlayerPosition == null) || 
 		    (Mathf.Abs(oldPlayerPosition.x - playerTransform.position.x) > playerPositionDifferenceToRecalcuate) || 
 		    (Mathf.Abs(oldPlayerPosition.y - playerTransform.position.y) > playerPositionDifferenceToRecalcuate) ||
 		    (Mathf.Abs(transform.position.y - playerTransform.position.y) > distanceFromPlayerGoal) ||
-		    (Mathf.Abs(transform.position.x - playerTransform.position.x) > distanceFromPlayerGoal)) {
+		    (Mathf.Abs(transform.position.x - playerTransform.position.x) > distanceFromPlayerGoal))) {
 
 			Vector3 target = (playerTransform.position - transform.position).normalized * distanceFromPlayerInterval + transform.position;
 
@@ -76,6 +79,20 @@ public class FollowPlayer : MonoBehaviour{
 			agent.SetDestination(newPoint);
 
 			oldPlayerPosition = playerTransform.position;
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.tag == "Player") {
+			agent.enabled = false;
+			InContactWithPlayer = true;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D other) {
+		if (other.gameObject.tag == "Player") {
+			agent.enabled = true;
+			InContactWithPlayer = false;
 		}
 	}
 }
