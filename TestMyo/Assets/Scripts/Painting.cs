@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+using LockingPolicy = Thalmic.Myo.LockingPolicy;
+using Pose = Thalmic.Myo.Pose;
+using UnlockType = Thalmic.Myo.UnlockType;
+using VibrationType = Thalmic.Myo.VibrationType;
+
 public class Painting : MonoBehaviour {
 
 	public Camera mainCamera;
@@ -10,37 +15,57 @@ public class Painting : MonoBehaviour {
 	public GameObject MyArm;
 	public GameObject MyOtherArm;
 	
-	private const int BRUSH_RADIUS = 2;
+	public int BrushRadius = 2;
+	
 	private Vector2 lastPixel;
 	private bool connectToLastPixel = false;
+	private ThalmicMyo thalmicMyo;
+	private Pose _lastPose = Pose.Unknown;
+	private bool handForward = true;
 
   	void Start() {
 		tex = renderer.material.mainTexture as Texture2D;
+		thalmicMyo = MyArm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
 
 		Reset();
     }
     
 	void DrawBrush(Texture2D tex, Vector2 pixelUV) {
-		for(int i = -BRUSH_RADIUS; i < BRUSH_RADIUS; i++) {
-			for(int j = -BRUSH_RADIUS; j < BRUSH_RADIUS; j++) {
-				if (Mathf.Abs(i) + Mathf.Abs (j) < BRUSH_RADIUS)
+		for(int i = -BrushRadius; i < BrushRadius; i++) {
+			for(int j = -BrushRadius; j < BrushRadius; j++) {
+				if (Mathf.Abs(i) + Mathf.Abs (j) < BrushRadius)
 					tex.SetPixel((int) pixelUV.x+i,(int) pixelUV.y+j, Color.black);
 			}
 		}
     }
   
     void Update() {
-//		if (!Input.GetMouseButton(0))
-//			return;
+
+		ThalmicMyo thalmicMyo = MyArm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
+		if (thalmicMyo.pose != _lastPose) {
+			_lastPose = thalmicMyo.pose;
+			if (thalmicMyo.pose == Thalmic.Myo.Pose.Fist) {
+				handForward = !handForward;
+				thalmicMyo.Vibrate(VibrationType.Short);
+			}	
+		}
 
 		Ray r  = new Ray(
 			MyArm.transform.position,
 			MyArm.transform.forward
 		);
 		
-		Debug.DrawRay(MyArm.transform.position, MyArm.transform.forward);
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			Reset();
+		}
+		
+		if (!handForward) {
+			connectToLastPixel = false;
+			return;
+		}
 		
 		RaycastHit hit;
+		// TODO: should probably filter for this painting object -Greg
 		if (!Physics.Raycast(r, out hit))
 			return;
 		
@@ -66,10 +91,6 @@ public class Painting : MonoBehaviour {
 		connectToLastPixel = true;
 		lastPixel = pixelUV;
 		tex.Apply();
-		
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			Reset();
-		}
 	}
 	
 	void Reset() {
@@ -79,6 +100,7 @@ public class Painting : MonoBehaviour {
 				tex.SetPixel(i,j, Color.white);
 			}
 		}
+		tex.Apply();
 	}
 
 	void OnApplicationQuit() {

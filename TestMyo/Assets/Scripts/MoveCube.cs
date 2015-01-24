@@ -26,6 +26,9 @@ public class MoveCube : MonoBehaviour {
 	bool freezeOnSignChange = false;
 	float referenceSign = 1;
 	float freezeStart;
+	public static bool HandForward = false;
+	
+	float lastChanged;
 	
 	// Update is called once per frame
 	void Update () {
@@ -51,7 +54,7 @@ public class MoveCube : MonoBehaviour {
 			if (sumMag < .0075) {
 				baseAccel = sum;
 				baseAccelSet = true;
-				Debug.Log ("calibrated");
+//				Debug.Log ("calibrated");
 			}
 		}
 		
@@ -88,9 +91,8 @@ public class MoveCube : MonoBehaviour {
 			velocity += processedAccel;
 			velocity.x = 0;
 			velocity.y = 0;
-			Debug.Log (velocity.magnitude);
-			if (velocity.magnitude > 1.2f)
-				velocity = velocity.normalized * 1.2f;
+//			if (velocity.magnitude > 1.2f)
+//				velocity = velocity.normalized * 1.2f;
 			
 			pastVelocities.Add (velocity);
 			if (pastVelocities.Count > 10)
@@ -112,22 +114,22 @@ public class MoveCube : MonoBehaviour {
 			Vector3 freezeProcessedVelocity = avgVelocity;
 			if (frozenUntilCalmDown) {
 			
-				if (avgVelocity.magnitude < 0.1f && (Time.time - freezeStart > 0.1f)) {
+				if (/*avgVelocity.magnitude < 0.1f &&*/ (Time.time - freezeStart > 0.25f)) {
 					frozenUntilCalmDown = false;
 					velocity = Vector3.zero;
-					Debug.Log ("thaw");
+//					Debug.Log ("thaw");
 				} else
 					freezeProcessedVelocity = Vector3.zero;
 			} else if (freezeOnSignChange) {
 				if (Mathf.Sign (avgVelocity.z) != referenceSign) {
-					Debug.Log ("Frozen!");
+//					Debug.Log ("Frozen!");
 					frozenUntilCalmDown = true;
 					freezeOnSignChange = false;
 					freezeProcessedVelocity = Vector3.zero;
 					freezeStart = Time.time;
 				}
 			} else if (Mathf.Abs(avgVelocity.z) > .75f) {
-			Debug.Log ("freezeTrigger");
+//				Debug.Log ("freezeTrigger");
 				freezeOnSignChange = true;
 				referenceSign = Mathf.Sign(avgVelocity.z);
 			}
@@ -137,28 +139,28 @@ public class MoveCube : MonoBehaviour {
 //			Vector3 reducedVelocity = new Vector3(0, 0, Mathf.Sign(avgVelocity.z) Mathf.Sqrt(Mathf.Abs(avgVelocity.z)));
 		
 		
-			if (freezeProcessedVelocity.magnitude < 0.2f) {
-				Vector3 homePos;
-				if (transform.position.z >= 0)
-					homePos = startPos + new Vector3(0, 0, 5);
-				else
-					homePos = startPos - new Vector3(0, 0, 5);
-			
-				freezeProcessedVelocity = (homePos - transform.position);
-				if (freezeProcessedVelocity.magnitude < 0.001) {
-					transform.position = homePos;
-					return;
-				}
-					
-				else {
-//					if (freezeProcessedVelocity.magnitude > 1)
-//						freezeProcessedVelocity.Normalize();
-					freezeProcessedVelocity *= .2f;
-				}
-			}
-			else {
-				freezeProcessedVelocity = freezeProcessedVelocity.normalized * (freezeProcessedVelocity.magnitude - 0.2f);
-			}
+//			if (freezeProcessedVelocity.magnitude < 0.2f) {
+//				Vector3 homePos;
+//				if (transform.position.z >= 0)
+//					homePos = startPos + new Vector3(0, 0, 5);
+//				else
+//					homePos = startPos - new Vector3(0, 0, 5);
+//			
+//				freezeProcessedVelocity = (homePos - transform.position);
+//				if (freezeProcessedVelocity.magnitude < 0.001) {
+//					transform.position = homePos;
+//					return;
+//				}
+//					
+//				else {
+////					if (freezeProcessedVelocity.magnitude > 1)
+////						freezeProcessedVelocity.Normalize();
+//					freezeProcessedVelocity *= .2f;
+//				}
+//			}
+//			else {
+//				freezeProcessedVelocity = freezeProcessedVelocity.normalized * (freezeProcessedVelocity.magnitude - 0.2f);
+//			}
 			
 			if (freezeProcessedVelocity.z > 0)
 				gameObject.renderer.material.color = Color.green;
@@ -167,10 +169,25 @@ public class MoveCube : MonoBehaviour {
 			else if (freezeProcessedVelocity.z < 0)
 				gameObject.renderer.material.color = Color.red;	
 
-			Vector3 newPos = transform.position + freezeProcessedVelocity;
-			transform.position = newPos;
+//			Vector3 newPos = transform.position + freezeProcessedVelocity;
+//			transform.position = newPos;
 //			Debug.Log (freezeProcessedVelocity);
-//			transform.position = startPos + new Vector3(0, 0, freezeProcessedVelocity.z);
+		
+			if (Time.time - lastChanged > 0.75) {
+				bool old = HandForward;
+				
+				if (HandForward && freezeProcessedVelocity.z < -.75)
+					HandForward = false;
+				else if (!HandForward && freezeProcessedVelocity.z > .75)
+					HandForward = true;
+					
+				if (old != HandForward) {
+					lastChanged = Time.time;
+					Debug.Log (HandForward);
+				}
+			}
+			
+			transform.position = startPos + new Vector3(0, 0, freezeProcessedVelocity.z);
 		}
 		
 		
