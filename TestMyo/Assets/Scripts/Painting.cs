@@ -18,8 +18,8 @@ public class Painting : MonoBehaviour {
 	private Paintbrush RightBrush;
 	public AudioClip SplatSound;
 	
-	public readonly Color OurRed = new Color32(220, 30, 30, 255);
-	public readonly Color OurBlue = new Color32(50, 100, 220, 255);
+	public Color OurRed = new Color32(220, 30, 30, 255);
+	public Color OurBlue = new Color32(50, 100, 220, 255);
 	
 	public int DefaultBrushRadius = 2;
 	

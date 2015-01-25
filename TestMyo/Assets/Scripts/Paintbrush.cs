@@ -15,7 +15,7 @@ public class Paintbrush {
 	public Vector2 LastPixel;
 	public bool ConnectToLastPixel;
 	
-	public readonly Color MyColor;
+	public readonly Color32 MyColor;
 	public readonly GameObject arm;
 	
 	public enum State {Paint, Charge}

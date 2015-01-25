@@ -6,6 +6,8 @@ public class PaintBall : MonoBehaviour {
 	float startTime;
 	bool released;
 	Paintbrush brush;
+	public GameObject BlueSplat;
+	public GameObject RedSplat;
 
 	// Use this for initialization
 	void Start () {
@@ -76,6 +78,13 @@ public class PaintBall : MonoBehaviour {
 			return;
 		
 		Painting p = collision.collider.GetComponent<Painting>();
+		Color32 a = brush.MyColor;
+		Color b = Painting.Instance.OurRed;
+		if (a == b)
+			Instantiate(RedSplat, transform.position, Quaternion.identity);
+		else
+			Instantiate(BlueSplat, transform.position, Quaternion.identity);
+			
 		if (p != null)
 			p.PaintBallHit(transform.position, collision.contacts[0].normal, brush.MyColor, power);
 	
