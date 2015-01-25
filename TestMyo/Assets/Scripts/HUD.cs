@@ -27,8 +27,12 @@ public class HUD : MonoBehaviour {
 	//get screen vars:
 	private float sw;
 	private float sh;
-
-
+	
+	public static HUD Instance;
+	
+	void Awake() {
+		Instance = this;
+	}
 
 	//setup:
 	void Start () { 

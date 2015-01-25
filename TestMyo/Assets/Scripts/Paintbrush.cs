@@ -50,8 +50,6 @@ public class Paintbrush {
 		float fractionalPower = (Time.time - chargeStart)/ChargeTime;
 		
 		paintBall.SendMessage("Release");
-		
-		Debug.Log ("release " + fractionalPower);
 	}
 	
 	public void Update() {

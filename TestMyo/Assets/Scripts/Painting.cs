@@ -119,6 +119,9 @@ public class Painting : MonoBehaviour {
     }
   
     void Update() {
+    	if (!GameManager.Instance.GameRunning)
+    		return;
+    		
 		Paint(LeftBrush);
 		Paint(RightBrush);
 		
@@ -129,16 +132,14 @@ public class Painting : MonoBehaviour {
 			Reset();
 		}
 		
-		float redPercent = (int)(100 * red / (float)totalPixels);
-		float bluePercent = (int)(100 * blue / (float)totalPixels);
-		float whitePercent = (int)(100 * white / (float)totalPixels);
-//		Debug.Log (bluePercent + " " + redPercent + " " + whitePercent);
+		HUD.Instance.redScore = red / (float)totalPixels;
+		HUD.Instance.blueScore = blue / (float)totalPixels;
 		
 		tex.Apply();
 	}
 	
 	void Reset() {
-//		LeftBrush.Reset();
+		LeftBrush.Reset();
 		RightBrush.Reset();
 		for(int i = 0; i < tex.width; i++) {
 			for(int j = 0; j < tex.height; j++) {
