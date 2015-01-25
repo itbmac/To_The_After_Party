@@ -92,17 +92,17 @@ public class GameManager : MonoBehaviour {
 		} if (CurrentState == GameState.Running) {
 			if (timeRemaining <= 30 && lastTimeRemaining > 30) {
 				// 30 seconds left!
-				audio.PlayOneShot(ThirtySecondsLeft);
+				audio.PlayOneShot(ThirtySecondsLeft, 1);
 				
 				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining <= 15 && lastTimeRemaining > 15) {
 				// 15 seconds left!
-				audio.PlayOneShot(FifteenSecondsLeft);
+				audio.PlayOneShot(FifteenSecondsLeft, 1);
 				
 				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining <= 5 && lastTimeRemaining > 5) {
 				// 5 seconds left!
-				audio.PlayOneShot(FiveSecondsLeft);
+				audio.PlayOneShot(FiveSecondsLeft, 1);
 				
 				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining == 0) {
@@ -111,14 +111,14 @@ public class GameManager : MonoBehaviour {
 				CurrentState = GameState.Over;
 				if (Painting.Instance.RedScore > Painting.Instance.BlueScore) {
 					// red wins
-					audio.PlayOneShot(RedWins);
+					audio.PlayOneShot(RedWins, 1);
 					
 					// TODO: HUD and sound
 					
 					HUD.Instance.message = 3;
 				} else {
 					// blue wins (break ties to blue)
-					audio.PlayOneShot(BlueWins);
+					audio.PlayOneShot(BlueWins, 1);
 					
 					// TODO: HUD and sound
 					HUD.Instance.message = 4;
