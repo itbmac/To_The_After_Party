@@ -78,15 +78,18 @@ public class Paintbrush {
 			return;
 			
 		if (!GameManager.Instance.BlobsUseGestures) {
-			bool handIsUp = 200 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
+			bool handIsUp = 170 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
 			downSinceLastThrow = downSinceLastThrow || !handIsUp;
 			
 			if (currentState == State.Paint && handIsUp && Time.time - lastRelease > GameManager.Instance.BlobCooldown) {
 				Charge();
 				
 			} else if (currentState == State.Charge && !handIsUp) {
-				Release();
-//				float rotationSpeed = Quaternion.Angle(lastRotation, arm.transform.rotation) / Time.deltaTime;
+				
+				float rotationSpeed = Quaternion.Angle(lastRotation, arm.transform.rotation) / Time.deltaTime;
+				if (rotationSpeed > 200)
+					Release();
+				
 //				if (!chargeSwingStarted && rotationSpeed > 200)
 //					chargeSwingStarted = true;
 //				else if (chargeSwingStarted && rotationSpeed < 50) {

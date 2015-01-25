@@ -113,11 +113,11 @@ public class JointOrientation : MonoBehaviour
         // The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
         // was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,
         // the rotation needs to be updated to compensate.
-        if (thalmicMyo.xDirection == Thalmic.Myo.XDirection.TowardWrist) {
-        	if (!notElbowWarningGiven) {
-	        	Debug.LogWarning("Not towards arm on " + myo.name);
-				notElbowWarningGiven = true;
-        	}
+//        if (thalmicMyo.xDirection == Thalmic.Myo.XDirection.TowardWrist) {
+//        	if (!notElbowWarningGiven) {
+//	        	Debug.LogWarning("Not towards arm on " + myo.name);
+//				notElbowWarningGiven = true;
+//        	}
         
             // Mirror the rotation around the XZ plane in Unity's coordinate system (XY plane in Myo's coordinate
             // system). This makes the rotation reflect the arm's orientation, rather than that of the Myo armband.
@@ -125,7 +125,7 @@ public class JointOrientation : MonoBehaviour
                                                 -transform.localRotation.y,
                                                 transform.localRotation.z,
                                                 -transform.localRotation.w);
-        }
+//        }
 
 		
 

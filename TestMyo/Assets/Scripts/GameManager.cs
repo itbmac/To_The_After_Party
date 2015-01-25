@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
 	public AudioClip ThirtySecondsLeft;
 	public AudioClip RedWins;
 	public AudioClip BlueWins;
+	public AudioClip PaintingBegin;
 	
 	void Awake() {
 		CurrentState = GameState.NotStarted;
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour {
 		if (GameStartCallbacks != null)
 			GameStartCallbacks();
 			
+		audio.PlayOneShot(PaintingBegin, 1);
 	
 	}
 	
