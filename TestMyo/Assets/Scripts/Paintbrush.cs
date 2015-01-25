@@ -16,7 +16,10 @@ public class Paintbrush {
 	public bool ConnectToLastPixel;
 	
 	public readonly Color MyColor;
-	private readonly GameObject arm;
+	public readonly GameObject arm;
+	
+	public enum State {Paint, Charge}
+	public State currentState = State.Paint;
 
 	public Paintbrush(GameObject arm, Color color) {
 		this.MyColor = color;
@@ -35,5 +38,45 @@ public class Paintbrush {
 	
 	public void Reset() {
 		ConnectToLastPixel = false;
+	}
+	
+	private float chargeStart;
+	public const float ChargeTime = 2.0f;
+	private GameObject paintBall;
+	public GameObject PaintBallPrefab;
+	
+	void Release() {
+		currentState = State.Paint;
+		float fractionalPower = (Time.time - chargeStart)/ChargeTime;
+		
+		paintBall.SendMessage("Release");
+		
+		Debug.Log ("release " + fractionalPower);
+	}
+	
+	public void Update() {
+		if (currentState == State.Charge && Time.time - chargeStart > ChargeTime) {
+			Release();
+		}
+	
+		if (thalmicMyo.pose != _lastPose) {
+			_lastPose = thalmicMyo.pose;
+			
+			if (thalmicMyo.pose != Thalmic.Myo.Pose.Fist && currentState == State.Paint) {
+				thalmicMyo.Vibrate(VibrationType.Short);
+				currentState = State.Charge;
+				chargeStart = Time.time;
+				
+				paintBall = (GameObject)MonoBehaviour.Instantiate(
+					Painting.Instance.PaintBallPrefab, 
+					arm.transform.position + arm.transform.forward * .5f, 
+					arm.transform.rotation
+				);
+				paintBall.SendMessage("Initialize", this);
+			} else if (thalmicMyo.pose != Pose.Fist && currentState == State.Charge) {
+				Release();
+			}
+		}
+	
 	}
 }

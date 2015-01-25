@@ -17,12 +17,21 @@ public class Painting : MonoBehaviour {
 	private Paintbrush LeftBrush;
 	private Paintbrush RightBrush;
 	
-	private readonly Color OurRed = new Color32(220, 30, 30, 255);
-	private readonly Color OurBlue = new Color32(50, 100, 220, 255);
+	public readonly Color OurRed = new Color32(220, 30, 30, 255);
+	public readonly Color OurBlue = new Color32(50, 100, 220, 255);
 	
-	public int BrushRadius = 2;
+	public int DefaultBrushRadius = 2;
 	
-  	void Start() {
+	public static Painting Instance;
+	public GameObject PaintBallPrefab;
+	public Material redMaterial;
+	public Material blueMaterial;
+	
+	void Awake() {
+		Instance = this;
+	}
+	
+  	void Start() {  	
 		tex = renderer.material.mainTexture as Texture2D;
 
 		LeftBrush = new Paintbrush(LeftArm, OurBlue);
@@ -34,16 +43,11 @@ public class Painting : MonoBehaviour {
 		totalPixels = white;
     }
     
-    void CheckInvariant() {
-    	if (red + blue + white != totalPixels || red < 0 || blue < 0 || white < 0)
-    		Debug.LogError("Invalid pixel counts " + red + " " + blue + " " + white + " " + totalPixels);
-    }
-    
     int red, blue, white, totalPixels;
-	void DrawBrush(Texture2D tex, Vector2 pixelUV, Color color) {
-		float br2 = BrushRadius*BrushRadius;
-		for(int i = -BrushRadius; i < BrushRadius; i++) {
-			for(int j = -BrushRadius; j < BrushRadius; j++) {
+	void DrawBrush(Texture2D tex, Vector2 pixelUV, Color color, int brushRadius) {
+		float br2 = brushRadius*brushRadius;
+		for(int i = -brushRadius; i < brushRadius; i++) {
+			for(int j = -brushRadius; j < brushRadius; j++) {
 				Vector2 v = new Vector2(i, j);
 				int px = (int) pixelUV.x+i;
 				int py = (int) pixelUV.y+j;
@@ -72,85 +76,69 @@ public class Painting : MonoBehaviour {
 				
 			}
 		}
-		CheckInvariant();
     }
     
-    void Paint(Paintbrush brush) {
+    private Vector2? GetUVHit(Ray r) {
 		RaycastHit hit;
-		Ray r = brush.GetRay();
-		Debug.DrawRay(r.origin, r.direction);
-		if (!collider.Raycast(brush.GetRay(), out hit, float.PositiveInfinity))
-			return;
-		
+		if (!collider.Raycast(r, out hit, float.PositiveInfinity))
+			return null;
+			
 		Renderer renderer = hit.collider.renderer;
 		MeshCollider meshCollider = hit.collider as MeshCollider;
 		if (renderer == null || renderer.sharedMaterial == null || renderer.sharedMaterial.mainTexture == null || meshCollider == null)
-			return;
+			return null;
 		
 		pixelUV = hit.textureCoord;
 		pixelUV.x *= tex.width;
 		pixelUV.y *= tex.height;
+		return pixelUV;
+    }
+    
+    void Paint(Paintbrush brush) {
+    	if (brush.currentState != Paintbrush.State.Paint)
+    		return;
+		
+		Vector2? possibleHit = GetUVHit(brush.GetRay());
+		if (possibleHit == null)
+			return;
+		
+		Vector2 pixelUV = (Vector2)possibleHit;
 		
 		if (brush.ConnectToLastPixel) {
 			Vector2 diff = pixelUV - brush.LastPixel;
 			float dist = diff.magnitude;
 			Vector2 diffNormalized = diff.normalized;
 			for (float interpolate = 0; interpolate < dist; interpolate += 1) {
-				DrawBrush(tex, brush.LastPixel + diffNormalized * interpolate, brush.MyColor);
+				DrawBrush(tex, brush.LastPixel + diffNormalized * interpolate, brush.MyColor, DefaultBrushRadius);
 			}
 		}
-		DrawBrush(tex, pixelUV, brush.MyColor);
+		DrawBrush(tex, pixelUV, brush.MyColor, DefaultBrushRadius);
 		
 		brush.ConnectToLastPixel = true;
 		brush.LastPixel = pixelUV;
     }
   
     void Update() {
-//		if (thalmicMyo.pose != _lastPose) {
-//			_lastPose = thalmicMyo.pose;
-//			if (thalmicMyo.pose == Thalmic.Myo.Pose.Fist) {
-//				handForward = !handForward;
-//				thalmicMyo.Vibrate(VibrationType.Short);
-//			}	
-//		}
-//		
 		Paint(LeftBrush);
 		Paint(RightBrush);
+		
+		LeftBrush.Update();
+		RightBrush.Update();
 		
 		if (Input.GetKeyDown(KeyCode.Q)) {
 			Reset();
 		}
 		
-//		if (!handForward) {
-//			connectToLastPixel = false;
-//			return;
-//		}
-		
-//		Color[] pixels = tex.GetPixels();
-//		int mred = 0, mblue = 0, mwhite = 0;
-//		foreach (Color c in pixels) {
-//			if (c == OurRed)
-//				mred += 1;
-//			else if (c == OurBlue)
-//				mblue += 1;
-//			else
-//				mwhite += 1;
-//		}
-		
 		float redPercent = (int)(100 * red / (float)totalPixels);
 		float bluePercent = (int)(100 * blue / (float)totalPixels);
 		float whitePercent = (int)(100 * white / (float)totalPixels);
-
-//		Debug.Log (red + " " + blue + " " + white);
-//		Debug.Log (red + " " + mred);
-		Debug.Log (bluePercent + " " + redPercent + " " + whitePercent);
-		
+//		Debug.Log (bluePercent + " " + redPercent + " " + whitePercent);
 		
 		tex.Apply();
 	}
 	
 	void Reset() {
-		LeftBrush.Reset();
+//		LeftBrush.Reset();
 		RightBrush.Reset();
 		for(int i = 0; i < tex.width; i++) {
 			for(int j = 0; j < tex.height; j++) {
@@ -162,6 +150,21 @@ public class Painting : MonoBehaviour {
 
 	void OnApplicationQuit() {
 		Reset ();
+  	}
+  	
+  	public void PaintBallHit(Vector3 pos, Vector3 paintingHitNormal, Color32 color, float power) {
+		Vector2? maybeHit = GetUVHit(new Ray(pos, -paintingHitNormal));
+		
+		if (maybeHit == null) {
+			Debug.Log ("missed");
+			return;
+		}
+			
+		Vector2 pixelUV = (Vector2)maybeHit;
+  	
+		DrawBrush(tex, pixelUV, color, (int)(30*power));
+  		
+		tex.Apply();
   	}
   
 }

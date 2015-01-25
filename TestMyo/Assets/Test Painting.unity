@@ -1297,7 +1297,7 @@ Transform:
   m_PrefabParentObject: {fileID: 459794, guid: 19dacf1ca47c266458433c4459979aa2, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 596703044}
-  m_LocalRotation: {x: .748856843, y: -.656705856, z: .0726551712, w: -.0516923666}
+  m_LocalRotation: {x: .748856843, y: -.656705856, z: .0726551712, w: -.0516922772}
   m_LocalPosition: {x: -.127144381, y: -.211778656, z: .0207883399}
   m_LocalScale: {x: 1, y: 1.0000006, z: .999999762}
   m_Children:
@@ -1485,7 +1485,7 @@ Transform:
   m_PrefabParentObject: {fileID: 459910, guid: 19dacf1ca47c266458433c4459979aa2, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 715987662}
-  m_LocalRotation: {x: .748856843, y: -.656705856, z: .0726551712, w: -.0516923666}
+  m_LocalRotation: {x: .748856843, y: -.656705856, z: .0726551712, w: -.0516922772}
   m_LocalPosition: {x: -.127144381, y: -.211778656, z: .0207883399}
   m_LocalScale: {x: 1, y: 1.0000006, z: .999999762}
   m_Children:
@@ -2291,6 +2291,9 @@ MonoBehaviour:
   LeftArm: {fileID: 2104809085}
   RightArm: {fileID: 1446903622}
   BrushRadius: 2
+  PaintBallPrefab: {fileID: 135556, guid: 12aa0a6699d814d0e96e31c985b2196d, type: 2}
+  redMaterial: {fileID: 0}
+  blueMaterial: {fileID: 0}
 --- !u!1 &1209619341
 GameObject:
   m_ObjectHideFlags: 0
