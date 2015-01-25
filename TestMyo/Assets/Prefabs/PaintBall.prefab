@@ -85,6 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a3ba0ccd3a549169daa85945939ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlueSplat: {fileID: 179526, guid: d361db9e58cc4a246a355d8898a76a67, type: 2}
+  RedSplat: {fileID: 138796, guid: 4ac53a6120b3c0a41834497c8d7a474f, type: 2}
 --- !u!135 &13535556
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -10,6 +10,8 @@ public class CameraEntry : MonoBehaviour {
 	public Transform hands;
 
 	private bool completed = false;
+	
+	public static CameraEntry Instance;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +19,7 @@ public class CameraEntry : MonoBehaviour {
 		hands.localEulerAngles = new Vector3 (60.0f, 0.0f, 0.0f);
 		camera.position = startCube.position;
 		camera.eulerAngles = startCube.eulerAngles;
+		Instance = this;
 	}
 	
 	// Update is called once per frame

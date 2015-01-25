@@ -78,7 +78,7 @@ public class Paintbrush {
 			return;
 			
 		if (!GameManager.Instance.BlobsUseGestures) {
-			bool handIsUp = 170 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
+			bool handIsUp = 140 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
 			downSinceLastThrow = downSinceLastThrow || !handIsUp;
 			
 			if (currentState == State.Paint && handIsUp && Time.time - lastRelease > GameManager.Instance.BlobCooldown) {

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
 		HUD.Instance.timer = timeRemaining;
 		
 		if (CurrentState == GameState.NotStarted) {
-			if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space) || CameraEntry.Instance.Completed()) {
 				HUD.Instance.message = 1;
 				CurrentState = GameState.WaitForCalibrate;
 			}
