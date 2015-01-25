@@ -16,6 +16,7 @@ public class Painting : MonoBehaviour {
 	public GameObject RightArm;
 	private Paintbrush LeftBrush;
 	private Paintbrush RightBrush;
+	public AudioClip SplatSound;
 	
 	public readonly Color OurRed = new Color32(220, 30, 30, 255);
 	public readonly Color OurBlue = new Color32(50, 100, 220, 255);
@@ -24,8 +25,6 @@ public class Painting : MonoBehaviour {
 	
 	public static Painting Instance;
 	public GameObject PaintBallPrefab;
-	public Material redMaterial;
-	public Material blueMaterial;
 	
 	void Awake() {
 		Instance = this;
@@ -118,6 +117,9 @@ public class Painting : MonoBehaviour {
 		brush.LastPixel = pixelUV;
     }
   
+	public float RedScore {get; private set; }
+	public float BlueScore {get; private set; }
+  	
     void Update() {
     	if (GameManager.Instance.CurrentState != GameManager.GameState.Running)
     		return;
@@ -132,8 +134,10 @@ public class Painting : MonoBehaviour {
 			Reset();
 		}
 		
-		HUD.Instance.redScore = Mathf.Sqrt(red / (float)totalPixels);
-		HUD.Instance.blueScore = Mathf.Sqrt(blue / (float)totalPixels);
+		RedScore = red / (float)totalPixels;
+		BlueScore = blue / (float)totalPixels;
+		HUD.Instance.redScore = Mathf.Sqrt(RedScore);
+		HUD.Instance.blueScore = Mathf.Sqrt(BlueScore);
 		
 		tex.Apply();
 	}
@@ -157,9 +161,10 @@ public class Painting : MonoBehaviour {
 		Vector2? maybeHit = GetUVHit(new Ray(pos, -paintingHitNormal));
 		
 		if (maybeHit == null) {
-			Debug.Log ("missed");
 			return;
 		}
+		
+		AudioSource.PlayClipAtPoint(SplatSound, pos, 1);
 			
 		Vector2 pixelUV = (Vector2)maybeHit;
   	

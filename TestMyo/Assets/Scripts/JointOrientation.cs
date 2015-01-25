@@ -20,7 +20,9 @@ public class JointOrientation : MonoBehaviour
     // Once set, the direction the Myo armband is facing becomes "forward" within the program.
     // Set by making the fingers spread pose or pressing "r".
     private Quaternion _antiYaw = Quaternion.identity;
-
+    
+	private Quaternion _antiPitch = Quaternion.identity;
+	
     // A reference angle representing how the armband is rotated about the wearer's arm, i.e. roll.
     // Set by making the fingers spread pose or pressing "r".
     private float _referenceRoll = 0.0f;
@@ -33,13 +35,14 @@ public class JointOrientation : MonoBehaviour
     public Vector3 Accel;
     
     private bool initialResetPerformed = false;
+    private bool notElbowWarningGiven = false;
     
     void OnGameStart() {
 		initialResetPerformed = false;
     }
     
     void Start() {
-		GameManager.Instance.GameStart += OnGameStart;
+		GameManager.Instance.GameStartCallbacks += OnGameStart;
     }
 
     // Update is called once per frame.
@@ -77,6 +80,8 @@ public class JointOrientation : MonoBehaviour
                 new Vector3 (myo.transform.forward.x, 0, myo.transform.forward.z),
                 new Vector3 (0, 0, 1)
             );
+            
+            // CONTINUE HERE:: ANTI PITCH
 
             // _referenceRoll represents how many degrees the Myo armband is rotated clockwise
             // about its forward axis (when looking down the wearer's arm towards their hand) from the reference zero
@@ -103,14 +108,17 @@ public class JointOrientation : MonoBehaviour
         
 		Quaternion newRotation = _antiYaw * antiRoll * Quaternion.LookRotation (myo.transform.forward);
 		if (!float.IsNaN(newRotation.x))
-	        transform.rotation = newRotation;
-
-		Accel = transform.rotation * thalmicMyo.accelerometer;
+	        transform.rotation = newRotation;		
 
         // The above calculations were done assuming the Myo armbands's +x direction, in its own coordinate system,
         // was facing toward the wearer's elbow. If the Myo armband is worn with its +x direction facing the other way,
         // the rotation needs to be updated to compensate.
         if (thalmicMyo.xDirection == Thalmic.Myo.XDirection.TowardWrist) {
+        	if (!notElbowWarningGiven) {
+	        	Debug.LogWarning("Not towards arm on " + myo.name);
+				notElbowWarningGiven = true;
+        	}
+        
             // Mirror the rotation around the XZ plane in Unity's coordinate system (XY plane in Myo's coordinate
             // system). This makes the rotation reflect the arm's orientation, rather than that of the Myo armband.
             transform.rotation = new Quaternion(transform.localRotation.x,
@@ -118,6 +126,10 @@ public class JointOrientation : MonoBehaviour
                                                 transform.localRotation.z,
                                                 -transform.localRotation.w);
         }
+
+		
+
+		Accel = transform.rotation * thalmicMyo.accelerometer;
     }
 
     // Compute the angle of rotation clockwise about the forward axis relative to the provided zero roll direction.

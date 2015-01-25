@@ -37,14 +37,14 @@ public class CameraEffects : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!enabled) {
-			if(cameraEntryScript.Completed() && Input.GetKeyDown(KeyCode.Space)) {
-				enabled = true;
-				originalEulerAngles = camera.transform.localEulerAngles;
-				GameManager.Instance.StartGame();
-			}
+		if(GameManager.Instance.CurrentState != GameManager.GameState.Running) {
+			originalEulerAngles = camera.transform.localEulerAngles;
 			return;
 		}
+		
+		if (GameManager.Instance.CurrentState != GameManager.GameState.Running)
+			return;
+		
 		// shakiness
 		float devX = shakeAmount * Mathf.Sin (timeFactors.x * shakeTime / slownessFactor);
 		float devY = shakeAmount * Mathf.Sin (timeFactors.y * shakeTime / slownessFactor);

@@ -11,10 +11,21 @@ public class ResetScript : MonoBehaviour {
 		gameManagerScript = gameManager.GetComponent<GameManager>();
 	}
 	
+	float spaceDown;
+	
 	// If valid, we reset the entire game.
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space) && gameManagerScript.CurrentState == GameManager.GameState.Over) {
-			Application.LoadLevel("Test Painting");
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			spaceDown = Time.time;
+			if(gameManagerScript.CurrentState == GameManager.GameState.Over) {
+				Application.LoadLevel(Application.loadedLevel);
+			}	
 		}
+		
+		if (gameManagerScript.CurrentState == GameManager.GameState.Running &&
+			Input.GetKey(KeyCode.Space) && Time.time - spaceDown > 1) {
+			Application.LoadLevel(Application.loadedLevel);
+		}
+		
 	}
 }

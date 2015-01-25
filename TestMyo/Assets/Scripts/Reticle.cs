@@ -10,9 +10,8 @@ public class Reticle : MonoBehaviour {
 		this.arm = arm;
 		this.painting = painting;
 		
-		renderer.material.color = color;
 		
-		Debug.Log ("initialized");
+		transform.GetChild(0).renderer.material.color = color;
 	}
 	
 	// Update is called once per frame
@@ -24,8 +23,12 @@ public class Reticle : MonoBehaviour {
 		Ray r = new Ray(arm.transform.position, arm.transform.forward);
 		RaycastHit hit;
 		if (!painting.collider.Raycast(r, out hit, float.PositiveInfinity)) {
+			transform.GetChild(0).renderer.enabled = false;
 			return;
 		}
+		if (!transform.GetChild(0).renderer.enabled)
+			transform.GetChild(0).renderer.enabled = true;
+		
 		transform.position = hit.point;
 	}
 }

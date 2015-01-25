@@ -29,9 +29,19 @@ public class PaintBall : MonoBehaviour {
 			Destroy(gameObject);
 		
 		if (initialized && !released) {
-			power = Mathf.Min (1, (Time.time - startTime) / Paintbrush.ChargeTime);
+			power = Mathf.Min (1, (Time.time - startTime) / GameManager.Instance.BlobChargeTime);
 			transform.localScale = Vector3.one * fullSize * power;
-			transform.position = brush.arm.transform.position + brush.arm.transform.forward * .5f;
+			
+			if (GameManager.Instance.BlobsUseGestures)
+				transform.position = brush.arm.transform.position + brush.arm.transform.forward * .5f;
+			else {
+				Vector3 offset = brush.arm.transform.up * -1 * .5f 
+					+ brush.arm.transform.forward * .5f;
+				transform.position = brush.arm.transform.position 
+					+ offset;
+					
+				transform.rotation = Quaternion.LookRotation(offset);
+			}
 		}	
 	}
 	
@@ -46,7 +56,7 @@ public class PaintBall : MonoBehaviour {
 	void Release() {
 		released = true;
 		rigidbody.isKinematic = false;
-		rigidbody.velocity = transform.forward;
+		rigidbody.velocity = transform.forward * 2;
 	}
 	
 	void OnCollisionEnter(Collision collision) {

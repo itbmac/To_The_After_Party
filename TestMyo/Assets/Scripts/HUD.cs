@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour {
 	public Texture2D blueBar;
 	public Texture2D blueBack;
 	public Texture2D timerHUD;
+	public Texture2D[] messages;
 
 	//size parameters for HUD:
 	public Vector2 barPos;
@@ -23,6 +24,9 @@ public class HUD : MonoBehaviour {
 	public Vector2 timerHUDSize;
 	public Vector2 timerSize;
 	public int timer;
+	
+	public Vector2 messageSize;
+	public int message;
 
 	//get screen vars:
 	private float sw;
@@ -42,6 +46,7 @@ public class HUD : MonoBehaviour {
 	//Draw the HUD:
 	void OnGUI() {
 
+		//set the skin texture.
 		GUI.skin = textSkin;
 
 		//update screen width and height if it changes
@@ -68,6 +73,9 @@ public class HUD : MonoBehaviour {
 		GUI.Label(new Rect( (int)(sw*.5f-sw*timerSize.x*.5f) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*timerHUDSize.x), 
 		          (int)(sh*timerHUDSize.y)),timer.ToString());
 
+		//draw any additional messages.
+		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*messageSize.x*.5f), (int)(sh*.5f-sh*messageSize.y*.5f), (int)(sw*messageSize.x), 
+		                         (int)(sh*messageSize.y)), messages[message], ScaleMode.StretchToFill);
 	}
 
 }

@@ -28,6 +28,11 @@ public class CameraEntry : MonoBehaviour {
 			camera.eulerAngles = new Vector3 (Mathf.Lerp (camera.eulerAngles.x, endCube.eulerAngles.x, MOVEMENT_SPEED * Time.deltaTime),
 			                                  Mathf.Lerp (camera.eulerAngles.y, endCube.eulerAngles.y, MOVEMENT_SPEED * Time.deltaTime),
 			                                  Mathf.Lerp (camera.eulerAngles.z, endCube.eulerAngles.z, MOVEMENT_SPEED * Time.deltaTime));
+          	
+          	if (Input.GetKeyDown(KeyCode.Space)) {
+          		camera.position = endCube.position;
+				camera.eulerAngles = endCube.eulerAngles;
+          	}
 		}
 		if((camera.eulerAngles - endCube.eulerAngles).magnitude < 0.05) {
 			camera.eulerAngles = endCube.eulerAngles;

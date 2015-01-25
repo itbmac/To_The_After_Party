@@ -46,23 +46,60 @@ public class Paintbrush {
 	}
 	
 	private float chargeStart;
-	public const float ChargeTime = 2.0f;
 	private GameObject paintBall;
 	public GameObject PaintBallPrefab;
 	
 	void Release() {
+		thalmicMyo.Vibrate(VibrationType.Short);
 		currentState = State.Paint;		
 		paintBall.SendMessage("Release");
+		lastRelease = Time.time;
 	}
 	
-	public void Update() {
+	void Charge() {
+		thalmicMyo.Vibrate(VibrationType.Short);
+		currentState = State.Charge;
+		chargeStart = Time.time;
 		
-		
+		paintBall = (GameObject)MonoBehaviour.Instantiate(
+			Painting.Instance.PaintBallPrefab, 
+			arm.transform.position + arm.transform.forward * .5f, 
+			arm.transform.rotation
+			);
+		paintBall.SendMessage("Initialize", this);
+	}
 	
+	float lastRelease;
+	private Quaternion lastRotation;
+	bool chargeSwingStarted;
+	bool downSinceLastThrow;
+	public void Update() {
 		if (!GameManager.Instance.BlobsEnabled)
 			return;
+			
+		if (!GameManager.Instance.BlobsUseGestures) {
+			bool handIsUp = 200 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
+			downSinceLastThrow = downSinceLastThrow || !handIsUp;
+			
+			if (currentState == State.Paint && handIsUp && downSinceLastThrow && Time.time - lastRelease > GameManager.Instance.BlobCooldown) {
+				Charge();
+				
+			} else if (currentState == State.Charge && Time.time - chargeStart > .4) {
+				float rotationSpeed = Quaternion.Angle(lastRotation, arm.transform.rotation) / Time.deltaTime;
+				if (!chargeSwingStarted && rotationSpeed > 200)
+					chargeSwingStarted = true;
+				else if (chargeSwingStarted && rotationSpeed < 50) {
+					Release();
+					chargeSwingStarted = false;
+					downSinceLastThrow = false;
+				}
+			}
+			
+			lastRotation = arm.transform.rotation;
+			return;
+		}
 	
-		if (currentState == State.Charge && Time.time - chargeStart > ChargeTime) {
+		if (currentState == State.Charge && Time.time - chargeStart > GameManager.Instance.BlobChargeTime) {
 			Release();
 		}
 	
@@ -70,16 +107,7 @@ public class Paintbrush {
 			_lastPose = thalmicMyo.pose;
 			
 			if (thalmicMyo.pose != Thalmic.Myo.Pose.Fist && currentState == State.Paint) {
-				thalmicMyo.Vibrate(VibrationType.Short);
-				currentState = State.Charge;
-				chargeStart = Time.time;
-				
-				paintBall = (GameObject)MonoBehaviour.Instantiate(
-					Painting.Instance.PaintBallPrefab, 
-					arm.transform.position + arm.transform.forward * .5f, 
-					arm.transform.rotation
-				);
-				paintBall.SendMessage("Initialize", this);
+				Charge();
 			} else if (thalmicMyo.pose != Pose.Fist && currentState == State.Charge) {
 				Release();
 			}

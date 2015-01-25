@@ -1,14 +1,14 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &129202
+--- !u!1 &196534
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 429202}
-  - 114: {fileID: 11429202}
+  - 4: {fileID: 496534}
+  - 114: {fileID: 11496534}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -16,24 +16,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &429202
+--- !u!4 &496534
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129202}
+  m_GameObject: {fileID: 196534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11429202
+--- !u!114 &11496534
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129202}
+  m_GameObject: {fileID: 196534}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0732dad06d709d346b45ef09d70e4118, type: 3}
@@ -45,6 +45,12 @@ MonoBehaviour:
   blueBar: {fileID: 2800000, guid: a5b75104e8271114da1881de1294c448, type: 3}
   blueBack: {fileID: 2800000, guid: 79e24e38d9e0b5a489c2ef8d29a859b3, type: 3}
   timerHUD: {fileID: 2800000, guid: d2026dc4126ce4b459c664ea3f0e0c56, type: 3}
+  messages:
+  - {fileID: 2800000, guid: c4bf84c66584c8b46a0563e63a876bb2, type: 3}
+  - {fileID: 2800000, guid: 7ae2792bd071cbd4898aafc0b94e593b, type: 3}
+  - {fileID: 2800000, guid: 98ad382b89509d947935765396f1f94f, type: 3}
+  - {fileID: 2800000, guid: 1ff879757f243c941be10c42b015de0e, type: 3}
+  - {fileID: 2800000, guid: c6831047024538a4b88ff8a3bcbb411e, type: 3}
   barPos: {x: .0399999991, y: .0500000007}
   barSize: {x: .400000006, y: .0500000007}
   redScore: 1
@@ -52,6 +58,8 @@ MonoBehaviour:
   timerHUDSize: {x: .119999997, y: .100000001}
   timerSize: {x: .119999997, y: .100000001}
   timer: 60
+  messageSize: {x: .400000006, y: .400000006}
+  message: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -61,6 +69,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 129202}
+  m_RootGameObject: {fileID: 196534}
   m_IsPrefabParent: 1
   m_IsExploded: 1
