@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 			Debug.Log("hub is good");
 		
 		HUD.Instance.message = 0;
+		Screen.showCursor = false;
 	}
 	
 	private void StartGame() {

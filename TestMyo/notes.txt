@@ -1,0 +1,9 @@
+
+Operating Notes
+
+M toggles music
+Q resets the board
+R resets position
+
+
+charge myo
