@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	// Public settings
 	public int TotalTime = 60;
 	public bool BlobsEnabled = true;
+	public GameObject Reticle;
 	
 	public enum GameState {NotStarted, Running, Over}
 	public GameState CurrentState { get; private set; }

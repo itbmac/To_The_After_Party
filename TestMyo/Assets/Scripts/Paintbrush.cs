@@ -20,13 +20,18 @@ public class Paintbrush {
 	
 	public enum State {Paint, Charge}
 	public State currentState = State.Paint;
+	
+	private Painting painting;
 
-	public Paintbrush(GameObject arm, Color color) {
+	public Paintbrush(GameObject arm, Color color, Painting painting) {
 		this.MyColor = color;
 		this.arm = arm;
+		this.painting = painting;
 		
 		thalmicMyo = arm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
 	
+		GameObject reticle = (GameObject)GameObject.Instantiate(GameManager.Instance.Reticle);
+		reticle.GetComponent<Reticle>().Initialize(arm, painting.gameObject, color);
 	}
 	
 	public Ray GetRay() {
@@ -51,6 +56,9 @@ public class Paintbrush {
 	}
 	
 	public void Update() {
+		
+		
+	
 		if (!GameManager.Instance.BlobsEnabled)
 			return;
 	

@@ -34,8 +34,8 @@ public class Painting : MonoBehaviour {
   	void Start() {  	
 		tex = renderer.material.mainTexture as Texture2D;
 
-		LeftBrush = new Paintbrush(LeftArm, OurBlue);
-		RightBrush = new Paintbrush(RightArm, OurRed);
+		LeftBrush = new Paintbrush(LeftArm, OurBlue, this);
+		RightBrush = new Paintbrush(RightArm, OurRed, this);
 
 		Reset();
 		
