@@ -81,18 +81,19 @@ public class Paintbrush {
 			bool handIsUp = 200 < arm.transform.rotation.eulerAngles.x && arm.transform.rotation.eulerAngles.x < 300;
 			downSinceLastThrow = downSinceLastThrow || !handIsUp;
 			
-			if (currentState == State.Paint && handIsUp && downSinceLastThrow && Time.time - lastRelease > GameManager.Instance.BlobCooldown) {
+			if (currentState == State.Paint && handIsUp && Time.time - lastRelease > GameManager.Instance.BlobCooldown) {
 				Charge();
 				
-			} else if (currentState == State.Charge && Time.time - chargeStart > .4) {
-				float rotationSpeed = Quaternion.Angle(lastRotation, arm.transform.rotation) / Time.deltaTime;
-				if (!chargeSwingStarted && rotationSpeed > 200)
-					chargeSwingStarted = true;
-				else if (chargeSwingStarted && rotationSpeed < 50) {
-					Release();
-					chargeSwingStarted = false;
-					downSinceLastThrow = false;
-				}
+			} else if (currentState == State.Charge && !handIsUp) {
+				Release();
+//				float rotationSpeed = Quaternion.Angle(lastRotation, arm.transform.rotation) / Time.deltaTime;
+//				if (!chargeSwingStarted && rotationSpeed > 200)
+//					chargeSwingStarted = true;
+//				else if (chargeSwingStarted && rotationSpeed < 50) {
+//					Release();
+//					chargeSwingStarted = false;
+//					downSinceLastThrow = false;
+//				}
 			}
 			
 			lastRotation = arm.transform.rotation;

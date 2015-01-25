@@ -35,7 +35,7 @@ public class PaintBall : MonoBehaviour {
 			if (GameManager.Instance.BlobsUseGestures)
 				transform.position = brush.arm.transform.position + brush.arm.transform.forward * .5f;
 			else {
-				Vector3 offset = brush.arm.transform.up * -1 * .5f 
+				Vector3 offset = brush.arm.transform.up * -1 * .25f 
 					+ brush.arm.transform.forward * .5f;
 				transform.position = brush.arm.transform.position 
 					+ offset;
@@ -56,7 +56,19 @@ public class PaintBall : MonoBehaviour {
 	void Release() {
 		released = true;
 		rigidbody.isKinematic = false;
-		rigidbody.velocity = transform.forward * 2;
+		Bounds b = Painting.Instance.collider.bounds;
+		
+		Vector3 target = new Vector3(
+			Random.Range(b.min.x, b.max.x),
+			Random.Range(b.min.y, b.max.y),
+			Random.Range(b.min.z, b.max.z)
+		);		
+		
+		Vector3 direction = target - transform.position;
+		direction.Normalize();
+		transform.rotation = Quaternion.LookRotation(direction);
+		
+		rigidbody.velocity = direction * 2;
 	}
 	
 	void OnCollisionEnter(Collision collision) {
