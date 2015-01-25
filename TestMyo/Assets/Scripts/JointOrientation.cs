@@ -33,6 +33,14 @@ public class JointOrientation : MonoBehaviour
     public Vector3 Accel;
     
     private bool initialResetPerformed = false;
+    
+    void OnGameStart() {
+		initialResetPerformed = false;
+    }
+    
+    void Start() {
+		GameManager.Instance.GameStart += OnGameStart;
+    }
 
     // Update is called once per frame.
     void Update ()
