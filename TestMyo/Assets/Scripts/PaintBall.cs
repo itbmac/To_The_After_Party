@@ -20,6 +20,11 @@ public class PaintBall : MonoBehaviour {
 		if (brush == null)
 			return;
 			
+		if (GameManager.Instance.CurrentState != GameManager.GameState.Running) {
+			Destroy(gameObject);
+			return;
+		}
+			
 		if (Time.time - startTime > 15.0f)
 			Destroy(gameObject);
 		
