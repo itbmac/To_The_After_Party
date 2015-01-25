@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11482750}
   - 114: {fileID: 11433588}
   - 82: {fileID: 8233588}
+  - 114: {fileID: 11447022}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -39,7 +40,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: a714b8aca35bf497c83752a06e2e4912, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -100,6 +101,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 482750}
+--- !u!114 &11447022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 182750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafd24f7ab7a0498b8ba7783865c2667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11482750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,11 +129,12 @@ MonoBehaviour:
   Reticle: {fileID: 117906, guid: c721af5501ed4440a80c995b77801481, type: 2}
   BlobChargeTime: .400000006
   BlobCooldown: .200000003
-  FiveSecondsLeft: {fileID: 0}
-  FifteenSecondsLeft: {fileID: 0}
-  ThirtySecondsLeft: {fileID: 0}
-  RedWins: {fileID: 0}
-  BlueWins: {fileID: 0}
+  FiveSecondsLeft: {fileID: 8300000, guid: 94743048ea3944008b03d4c2afb22aab, type: 3}
+  FifteenSecondsLeft: {fileID: 8300000, guid: 9434f9e0eee4d44008ebaccf8745d4d7, type: 3}
+  ThirtySecondsLeft: {fileID: 8300000, guid: f83496cf7eaaa48738b1d67015d1f09d, type: 3}
+  RedWins: {fileID: 8300000, guid: 9394571fa501e406ea8706f9bb45dad5, type: 3}
+  BlueWins: {fileID: 8300000, guid: 2a9f0139958e14991a3fc891ae495393, type: 3}
+  PaintingBegin: {fileID: 8300000, guid: f26c51d2a7baa4a59a9868890fc22b32, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
