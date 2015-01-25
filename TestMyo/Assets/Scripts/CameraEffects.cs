@@ -41,6 +41,7 @@ public class CameraEffects : MonoBehaviour {
 			if(cameraEntryScript.Completed() && Input.GetKeyDown(KeyCode.Space)) {
 				enabled = true;
 				originalEulerAngles = camera.transform.localEulerAngles;
+				GameManager.Instance.StartGame();
 			}
 			return;
 		}

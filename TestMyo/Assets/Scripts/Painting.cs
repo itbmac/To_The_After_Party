@@ -132,8 +132,8 @@ public class Painting : MonoBehaviour {
 			Reset();
 		}
 		
-		HUD.Instance.redScore = red / (float)totalPixels;
-		HUD.Instance.blueScore = blue / (float)totalPixels;
+		HUD.Instance.redScore = Mathf.Sqrt(red / (float)totalPixels);
+		HUD.Instance.blueScore = Mathf.Sqrt(blue / (float)totalPixels);
 		
 		tex.Apply();
 	}

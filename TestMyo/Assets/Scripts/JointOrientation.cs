@@ -28,11 +28,19 @@ public class JointOrientation : MonoBehaviour
     // The pose from the last update. This is used to determine if the pose has changed
     // so that actions are only performed upon making them rather than every frame during
     // which they are active.
-    private Pose _lastPose = Pose.Unknown;
+//    private Pose _lastPose = Pose.Unknown;
     
     public Vector3 Accel;
     
     private bool initialResetPerformed = false;
+    
+    void OnGameStart() {
+		initialResetPerformed = false;
+    }
+    
+    void Start() {
+		GameManager.Instance.GameStart += OnGameStart;
+    }
 
     // Update is called once per frame.
     void Update ()
@@ -92,7 +100,10 @@ public class JointOrientation : MonoBehaviour
 
         // Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
         // the orientation of the joint.
-        transform.rotation = _antiYaw * antiRoll * Quaternion.LookRotation (myo.transform.forward);
+        
+		Quaternion newRotation = _antiYaw * antiRoll * Quaternion.LookRotation (myo.transform.forward);
+		if (!float.IsNaN(newRotation.x))
+	        transform.rotation = newRotation;
 
 		Accel = transform.rotation * thalmicMyo.accelerometer;
 
