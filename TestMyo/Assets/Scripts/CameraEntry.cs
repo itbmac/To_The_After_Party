@@ -9,7 +9,7 @@ public class CameraEntry : MonoBehaviour {
 	public Transform camera;
 	public Transform hands;
 
-	public bool completed = false;
+	private bool completed = false;
 
 	// Use this for initialization
 	void Start () {
@@ -39,5 +39,9 @@ public class CameraEntry : MonoBehaviour {
 		hands.localEulerAngles = new Vector3 (Mathf.Lerp (camera.localEulerAngles.x, -10.0f, MOVEMENT_SPEED * Time.deltaTime),
 		                                      0.0f,
 		                                      0.0f);
+	}
+
+	public bool Completed() {
+		return completed;
 	}
 }

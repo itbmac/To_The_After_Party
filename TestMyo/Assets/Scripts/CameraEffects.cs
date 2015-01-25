@@ -38,7 +38,7 @@ public class CameraEffects : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!enabled) {
-			if(cameraEntryScript.completed && Input.GetKeyDown(KeyCode.Space)) {
+			if(cameraEntryScript.Completed() && Input.GetKeyDown(KeyCode.Space)) {
 				enabled = true;
 				originalEulerAngles = camera.transform.localEulerAngles;
 			}
