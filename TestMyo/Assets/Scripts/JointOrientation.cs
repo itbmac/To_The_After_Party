@@ -31,6 +31,8 @@ public class JointOrientation : MonoBehaviour
     private Pose _lastPose = Pose.Unknown;
     
     public Vector3 Accel;
+    
+    private bool initialResetPerformed = false;
 
     // Update is called once per frame.
     void Update ()
@@ -40,6 +42,11 @@ public class JointOrientation : MonoBehaviour
 
         // Update references when the pose becomes fingers spread or the q key is pressed.
         bool updateReference = false;
+		if (!initialResetPerformed && Time.time > 1.0f) {
+			updateReference = true;
+			initialResetPerformed = true;
+		}
+        
 //        if (thalmicMyo.pose != _lastPose) {
 //            _lastPose = thalmicMyo.pose;
 //

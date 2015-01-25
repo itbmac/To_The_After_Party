@@ -12,63 +12,74 @@ public class Painting : MonoBehaviour {
 	private Texture2D tex;
 	private Vector2 pixelUV;
 	
-	public GameObject MyArm;
-	public GameObject MyOtherArm;
+	public GameObject LeftArm;
+	public GameObject RightArm;
+	private Paintbrush LeftBrush;
+	private Paintbrush RightBrush;
+	
+	private readonly Color OurRed = new Color32(220, 30, 30, 255);
+	private readonly Color OurBlue = new Color32(50, 100, 220, 255);
 	
 	public int BrushRadius = 2;
 	
-	private Vector2 lastPixel;
-	private bool connectToLastPixel = false;
-	private ThalmicMyo thalmicMyo;
-	private Pose _lastPose = Pose.Unknown;
-	private bool handForward = true;
-
   	void Start() {
 		tex = renderer.material.mainTexture as Texture2D;
-		thalmicMyo = MyArm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
+
+		LeftBrush = new Paintbrush(LeftArm, OurBlue);
+		RightBrush = new Paintbrush(RightArm, OurRed);
 
 		Reset();
+		
+		white = tex.width * tex.height;
+		totalPixels = white;
     }
     
-	void DrawBrush(Texture2D tex, Vector2 pixelUV) {
+    void CheckInvariant() {
+    	if (red + blue + white != totalPixels || red < 0 || blue < 0 || white < 0)
+    		Debug.LogError("Invalid pixel counts " + red + " " + blue + " " + white + " " + totalPixels);
+    }
+    
+    int red, blue, white, totalPixels;
+	void DrawBrush(Texture2D tex, Vector2 pixelUV, Color color) {
+		float br2 = BrushRadius*BrushRadius;
 		for(int i = -BrushRadius; i < BrushRadius; i++) {
 			for(int j = -BrushRadius; j < BrushRadius; j++) {
-				if (Mathf.Abs(i) + Mathf.Abs (j) < BrushRadius)
-					tex.SetPixel((int) pixelUV.x+i,(int) pixelUV.y+j, Color.black);
+				Vector2 v = new Vector2(i, j);
+				int px = (int) pixelUV.x+i;
+				int py = (int) pixelUV.y+j;
+				
+				if (0 <= px && px < tex.width && 0 <= py && py <= tex.height && v.sqrMagnitude < br2) {
+					Color32 old = tex.GetPixel(px, py);
+					tex.SetPixel(px, py, color);
+					
+					if (old == OurRed)
+						red -= 1;
+					else if (old == OurBlue)
+						blue -= 1;
+					else {
+						if (old != Color.white)
+							Debug.LogError("didnt kill white, killed " + old);
+						white -= 1;
+					}
+						
+					if (color == OurRed)
+						red += 1;
+					else if (color == OurBlue)
+						blue += 1;
+					else
+						Debug.LogError("Tried to draw unrecognized color");
+				}
+				
 			}
 		}
+		CheckInvariant();
     }
-  
-    void Update() {
-		if (thalmicMyo.pose != _lastPose) {
-			_lastPose = thalmicMyo.pose;
-			if (thalmicMyo.pose == Thalmic.Myo.Pose.Fist) {
-				handForward = !handForward;
-				thalmicMyo.Vibrate(VibrationType.Short);
-			}	
-		}
-		
-		Ray r  = new Ray(
-			MyArm.transform.position,
-			MyArm.transform.forward
-		);
-		Debug.DrawRay(
-			MyArm.transform.position,
-			MyArm.transform.forward
-		);
-		
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			Reset();
-		}
-		
-		if (!handForward) {
-			connectToLastPixel = false;
-			return;
-		}
-		
+    
+    void Paint(Paintbrush brush) {
 		RaycastHit hit;
-		// TODO: should probably filter for this painting object -Greg
-		if (!Physics.Raycast(r, out hit))
+		Ray r = brush.GetRay();
+		Debug.DrawRay(r.origin, r.direction);
+		if (!collider.Raycast(brush.GetRay(), out hit, float.PositiveInfinity))
 			return;
 		
 		Renderer renderer = hit.collider.renderer;
@@ -80,23 +91,67 @@ public class Painting : MonoBehaviour {
 		pixelUV.x *= tex.width;
 		pixelUV.y *= tex.height;
 		
-		if (connectToLastPixel) {
-			Vector2 diff = pixelUV - lastPixel;
+		if (brush.ConnectToLastPixel) {
+			Vector2 diff = pixelUV - brush.LastPixel;
 			float dist = diff.magnitude;
 			Vector2 diffNormalized = diff.normalized;
 			for (float interpolate = 0; interpolate < dist; interpolate += 1) {
-				DrawBrush(tex, lastPixel + diffNormalized * interpolate);
+				DrawBrush(tex, brush.LastPixel + diffNormalized * interpolate, brush.MyColor);
 			}
 		}
-		DrawBrush(tex, pixelUV);
+		DrawBrush(tex, pixelUV, brush.MyColor);
 		
-		connectToLastPixel = true;
-		lastPixel = pixelUV;
+		brush.ConnectToLastPixel = true;
+		brush.LastPixel = pixelUV;
+    }
+  
+    void Update() {
+//		if (thalmicMyo.pose != _lastPose) {
+//			_lastPose = thalmicMyo.pose;
+//			if (thalmicMyo.pose == Thalmic.Myo.Pose.Fist) {
+//				handForward = !handForward;
+//				thalmicMyo.Vibrate(VibrationType.Short);
+//			}	
+//		}
+//		
+		Paint(LeftBrush);
+		Paint(RightBrush);
+		
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			Reset();
+		}
+		
+//		if (!handForward) {
+//			connectToLastPixel = false;
+//			return;
+//		}
+		
+//		Color[] pixels = tex.GetPixels();
+//		int mred = 0, mblue = 0, mwhite = 0;
+//		foreach (Color c in pixels) {
+//			if (c == OurRed)
+//				mred += 1;
+//			else if (c == OurBlue)
+//				mblue += 1;
+//			else
+//				mwhite += 1;
+//		}
+		
+		float redPercent = (int)(100 * red / (float)totalPixels);
+		float bluePercent = (int)(100 * blue / (float)totalPixels);
+		float whitePercent = (int)(100 * white / (float)totalPixels);
+
+//		Debug.Log (red + " " + blue + " " + white);
+//		Debug.Log (red + " " + mred);
+		Debug.Log (bluePercent + " " + redPercent + " " + whitePercent);
+		
+		
 		tex.Apply();
 	}
 	
 	void Reset() {
-		connectToLastPixel = false;
+		LeftBrush.Reset();
+		RightBrush.Reset();
 		for(int i = 0; i < tex.width; i++) {
 			for(int j = 0; j < tex.height; j++) {
 				tex.SetPixel(i,j, Color.white);
