@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour {
 	public int TotalTime = 60;
 	public bool BlobsEnabled = true;
 	
-	public bool GameRunning { get; private set; }
+	public enum GameState {NotStarted, Running, Over}
+	public GameState CurrentState { get; private set; }
+	
 	private float startTime;
 	
 	public static GameManager Instance;
@@ -16,16 +18,13 @@ public class GameManager : MonoBehaviour {
 	public Action GameStart;
 	
 	void Awake() {
+		CurrentState = GameState.NotStarted;
 		Instance = this;
-	}
-
-	// Use this for initialization
-	void Start () {
-		GameRunning = false;
 	}
 	
 	public void StartGame() {
-		GameRunning = true;
+		CurrentState = GameState.Running;
+		
 		startTime = Time.time;
 		if (GameStart != null)
 			GameStart();
@@ -33,13 +32,20 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		int timeRemaining = GameRunning ? (int)Mathf.Max (0, TotalTime - (Time.time - startTime)) : TotalTime;
+		int timeRemaining;
+		if (CurrentState == GameState.Running)
+			timeRemaining = (int)Mathf.Max (0, TotalTime - (Time.time - startTime));
+		else if (CurrentState == GameState.Over)
+			timeRemaining = 0;
+		else
+			timeRemaining = TotalTime;
+			
 		HUD.Instance.timer = timeRemaining;
 		
-		if (timeRemaining == 0) {
+		if (timeRemaining == 0 && CurrentState == GameState.Running) {
 			// TODO: game over
 			
-			GameRunning = false;
+			CurrentState = GameState.Over;
 		}
 	
 	}

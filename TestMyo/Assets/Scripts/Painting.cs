@@ -119,7 +119,7 @@ public class Painting : MonoBehaviour {
     }
   
     void Update() {
-    	if (!GameManager.Instance.GameRunning)
+    	if (GameManager.Instance.CurrentState != GameManager.GameState.Running)
     		return;
     		
 		Paint(LeftBrush);

@@ -13,7 +13,7 @@ public class ResetScript : MonoBehaviour {
 	
 	// If valid, we reset the entire game.
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space) && !gameManagerScript.GameRunning) {
+		if(Input.GetKeyDown(KeyCode.Space) && gameManagerScript.CurrentState == GameManager.GameState.Over) {
 			Application.LoadLevel("Test Painting");
 		}
 	}

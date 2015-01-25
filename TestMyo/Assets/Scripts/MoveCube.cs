@@ -62,10 +62,10 @@ public class MoveCube : MonoBehaviour {
 		if (baseAccelSet) {
 //			Debug.Log (processedAccel.z);
 			
-			Vector3 reducedAccel = processedAccel;
+//			Vector3 reducedAccel = processedAccel;
 			float accelPivot = 0.04f; // anything below this magnitude doesn't count as motion
 			if (processedAccel.magnitude >= accelPivot) {
-				reducedAccel = processedAccel.normalized * (processedAccel.magnitude - accelPivot);
+//				reducedAccel = processedAccel.normalized * (processedAccel.magnitude - accelPivot);
 //				velocity = velocity * 1 + reducedAccel;	
 			}
 			

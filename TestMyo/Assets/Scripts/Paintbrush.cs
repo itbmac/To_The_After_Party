@@ -46,9 +46,7 @@ public class Paintbrush {
 	public GameObject PaintBallPrefab;
 	
 	void Release() {
-		currentState = State.Paint;
-		float fractionalPower = (Time.time - chargeStart)/ChargeTime;
-		
+		currentState = State.Paint;		
 		paintBall.SendMessage("Release");
 	}
 	
