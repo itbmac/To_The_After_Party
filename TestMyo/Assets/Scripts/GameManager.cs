@@ -3,7 +3,10 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+	// Public settings
 	public int TotalTime = 60;
+	public bool BlobsEnabled = true;
+	
 	public bool GameRunning { get; private set; }
 	private float startTime;
 	

@@ -53,6 +53,9 @@ public class Paintbrush {
 	}
 	
 	public void Update() {
+		if (!GameManager.Instance.BlobsEnabled)
+			return;
+	
 		if (currentState == State.Charge && Time.time - chargeStart > ChargeTime) {
 			Release();
 		}
