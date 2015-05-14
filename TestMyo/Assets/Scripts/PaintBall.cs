@@ -52,13 +52,13 @@ public class PaintBall : MonoBehaviour {
 		initialized = true;
 		this.brush = brush;
 		startTime = Time.time;
-		this.renderer.material.color = brush.MyColor;
+		this.GetComponent<Renderer>().material.color = brush.MyColor;
 	}
 	
 	void Release() {
 		released = true;
-		rigidbody.isKinematic = false;
-		Bounds b = Painting.Instance.collider.bounds;
+		GetComponent<Rigidbody>().isKinematic = false;
+		Bounds b = Painting.Instance.GetComponent<Collider>().bounds;
 		
 		Vector3 target = new Vector3(
 			Random.Range(b.min.x, b.max.x),
@@ -70,7 +70,7 @@ public class PaintBall : MonoBehaviour {
 		direction.Normalize();
 		transform.rotation = Quaternion.LookRotation(direction);
 		
-		rigidbody.velocity = direction * 2;
+		GetComponent<Rigidbody>().velocity = direction * 2;
 	}
 	
 	void OnCollisionEnter(Collision collision) {

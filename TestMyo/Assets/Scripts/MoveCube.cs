@@ -163,11 +163,11 @@ public class MoveCube : MonoBehaviour {
 //			}
 			
 			if (freezeProcessedVelocity.z > 0)
-				gameObject.renderer.material.color = Color.green;
+				gameObject.GetComponent<Renderer>().material.color = Color.green;
 			else if (freezeProcessedVelocity.z == 0)
-				gameObject.renderer.material.color = Color.white;
+				gameObject.GetComponent<Renderer>().material.color = Color.white;
 			else if (freezeProcessedVelocity.z < 0)
-				gameObject.renderer.material.color = Color.red;	
+				gameObject.GetComponent<Renderer>().material.color = Color.red;	
 
 //			Vector3 newPos = transform.position + freezeProcessedVelocity;
 //			transform.position = newPos;

@@ -31,7 +31,7 @@ public class Painting : MonoBehaviour {
 	}
 	
   	void Start() {  	
-		tex = renderer.material.mainTexture as Texture2D;
+		tex = GetComponent<Renderer>().material.mainTexture as Texture2D;
 
 		LeftBrush = new Paintbrush(LeftArm, OurRed, this);
 		RightBrush = new Paintbrush(RightArm, OurBlue, this);
@@ -79,10 +79,10 @@ public class Painting : MonoBehaviour {
     
     private Vector2? GetUVHit(Ray r) {
 		RaycastHit hit;
-		if (!collider.Raycast(r, out hit, float.PositiveInfinity))
+		if (!GetComponent<Collider>().Raycast(r, out hit, float.PositiveInfinity))
 			return null;
 			
-		Renderer renderer = hit.collider.renderer;
+		Renderer renderer = hit.collider.GetComponent<Renderer>();
 		MeshCollider meshCollider = hit.collider as MeshCollider;
 		if (renderer == null || renderer.sharedMaterial == null || renderer.sharedMaterial.mainTexture == null || meshCollider == null)
 			return null;

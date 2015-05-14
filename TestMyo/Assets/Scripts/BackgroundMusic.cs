@@ -5,6 +5,6 @@ public class BackgroundMusic : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.M))
-			audio.mute = !audio.mute;
+			GetComponent<AudioSource>().mute = !GetComponent<AudioSource>().mute;
 	}
 }
