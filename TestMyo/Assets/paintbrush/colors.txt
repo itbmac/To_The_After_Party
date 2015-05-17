@@ -1,0 +1,12 @@
+Cool Colors
+-Green (1,123,62)
+-Blue-green (0,136,126)
+-Blue (0,127,159)
+-Violet (59,74,159)
+
+Warm Colors
+-Yellow (254,242,0)
+-Orange (255,102,0)
+-Red (254,0,13)
+-Purple (15,28,95)
+
