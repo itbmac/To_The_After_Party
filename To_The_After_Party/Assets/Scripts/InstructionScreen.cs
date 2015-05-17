@@ -33,7 +33,7 @@ public class InstructionScreen : MonoBehaviour {
 		}
 		else {
 			if (TestLoadCompleteObj.activeSelf) {
-				Loading.guiText.text = "Press <A> to Play";
+				Loading.GetComponent<GUIText>().text = "Press <A> to Play";
 
 				InControl.InputDevice inputDevice = InputManager.ActiveDevice;
 				if(inputDevice.AnyButton.IsPressed)

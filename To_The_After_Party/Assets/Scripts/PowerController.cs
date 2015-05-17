@@ -26,8 +26,8 @@ public class PowerController : MonoBehaviour {
 		if (CurFrameNumber == NumFramesUntilRefresh) {
 			CurFrameNumber = 0;
 
-			Vector3 distBetweenPlayer = this.rigidbody2D.transform.position - player.rigidbody2D.transform.position;
-			Vector3 distBetweenTrinkets = this.rigidbody2D.transform.position - trinkets.rigidbody2D.transform.position;
+			Vector3 distBetweenPlayer = this.GetComponent<Rigidbody2D>().transform.position - player.GetComponent<Rigidbody2D>().transform.position;
+			Vector3 distBetweenTrinkets = this.GetComponent<Rigidbody2D>().transform.position - trinkets.GetComponent<Rigidbody2D>().transform.position;
 			distToPlayer = distBetweenPlayer.magnitude;
 			distToTrinkets = distBetweenTrinkets.magnitude;
 
@@ -36,7 +36,7 @@ public class PowerController : MonoBehaviour {
 				{
 					GameObject obj = transform.GetChild(i).gameObject;
 					if (obj.tag == "wall") {
-						Vector3 distTo = obj.transform.position - player.rigidbody2D.transform.position;
+						Vector3 distTo = obj.transform.position - player.GetComponent<Rigidbody2D>().transform.position;
 						if (distTo.magnitude <= DistToPlayerToFlipSwitch) {
 							obj.SetActive(true);
 						}

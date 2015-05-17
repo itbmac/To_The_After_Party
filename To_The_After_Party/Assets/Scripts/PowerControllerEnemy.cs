@@ -29,11 +29,11 @@ public class PowerControllerEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 distBetweenPlayer = this.rigidbody2D.transform.position - player.rigidbody2D.transform.position;
+		Vector3 distBetweenPlayer = this.GetComponent<Rigidbody2D>().transform.position - player.GetComponent<Rigidbody2D>().transform.position;
 		distToPlayer = distBetweenPlayer.magnitude;
 
 		if (RequiresCompanion) {
-			Vector3 distBetweenTrinkets = this.rigidbody2D.transform.position - trinkets.rigidbody2D.transform.position;
+			Vector3 distBetweenTrinkets = this.GetComponent<Rigidbody2D>().transform.position - trinkets.GetComponent<Rigidbody2D>().transform.position;
 			distToTrinkets = distBetweenTrinkets.magnitude;
 		}
 

@@ -64,7 +64,12 @@ public class HUD : MonoBehaviour {
 		GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x*blueScore), 
 		                         (int)(sh*barSize.y)), blueBar, ScaleMode.StretchToFill);
 
-
+		//draw the bar percentages
+		GUI.Label(new Rect( (int)(sw*.5f-sw*barSize.x-sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
+		                   (int)(sh*timerHUDSize.y)),((int)(redScore*100f)).ToString());
+		GUI.Label(new Rect( (int)(sw*.5f+sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
+		                   (int)(sh*timerHUDSize.y)),((int)(blueScore*100f)).ToString());
+		
 		//draw the hud timer
 		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*timerHUDSize.x*.5f), (int)(sh*barPos.y-sh*timerHUDSize.y*.5f), (int)(sw*timerHUDSize.x), 
 		                         (int)(sh*timerHUDSize.y)), timerHUD, ScaleMode.StretchToFill);

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKey(KeyLeft))
 			xL -= 1.0f;
 
-		float VX = rigidbody2D.velocity.x + AccelRate * xL;
+		float VX = GetComponent<Rigidbody2D>().velocity.x + AccelRate * xL;
 		if (VX > 0) {
 			VX = Mathf.Min(VX, MaxSpeed);
 		}
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour {
 			VX = Mathf.Max(VX, -MaxSpeed);
 		}
 
-		float VY = rigidbody2D.velocity.y + AccelRate * yL;
+		float VY = GetComponent<Rigidbody2D>().velocity.y + AccelRate * yL;
 		if (VY > 0) {
 			VY = Mathf.Min(VY, MaxSpeed);
 		}
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 			VY += DrunkWalkAmount * Mathf.Sin(Time.time);
 		}
 
-		rigidbody2D.velocity = new Vector2(VX, VY);
+		GetComponent<Rigidbody2D>().velocity = new Vector2(VX, VY);
 
 		//RestrictMovement();
 	}
