@@ -15,7 +15,7 @@ public class Paintbrush {
 	public Vector2 LastPixel;
 	public bool ConnectToLastPixel;
 	
-	public readonly Color32 MyColor;
+	public Color32 MyColor;
 	public readonly GameObject arm;
 	
 	public enum State {Paint, Charge}
@@ -66,11 +66,22 @@ public class Paintbrush {
 		paintBall.SendMessage("Initialize", this);
 	}
 	
+	void CheckColorSelectorHit() {
+		RaycastHit hit;
+		var results = Physics.Raycast(GetRay(), out hit, Mathf.Infinity, LayerMask.GetMask("ColorSelector"));
+		if (hit.collider != null) {
+			var newColor = hit.collider.GetComponent<ColorSelector>().MyColor;
+			MyColor = newColor;
+		}
+	}
+	
 	float lastRelease;
 	private Quaternion lastRotation;
 	bool chargeSwingStarted;
 	bool downSinceLastThrow;
 	public void Update() {
+		CheckColorSelectorHit();
+	
 		if (!GameManager.Instance.BlobsEnabled)
 			return;
 			

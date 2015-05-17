@@ -60,8 +60,8 @@ public class Painting : MonoBehaviour {
 					else if (old == OurBlue)
 						blue -= 1;
 					else {
-						if (old != Color.white)
-							Debug.LogError("didnt kill white, killed " + old);
+//						if (old != Color.white)
+//							Debug.LogError("didnt kill white, killed " + old);
 						white -= 1;
 					}
 						
@@ -69,8 +69,8 @@ public class Painting : MonoBehaviour {
 						red += 1;
 					else if (color == OurBlue)
 						blue += 1;
-					else
-						Debug.LogError("Tried to draw unrecognized color");
+//					else
+//						Debug.LogError("Tried to draw unrecognized color");
 				}
 				
 			}
