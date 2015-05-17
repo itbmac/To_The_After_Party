@@ -31,10 +31,10 @@ public class PauseScreen : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		for ( int i = 0; i < MenuOptionObjs.Count; i++)
-			MenuOptionStrs.Add(MenuOptionObjs[i].guiText.text);
+			MenuOptionStrs.Add(MenuOptionObjs[i].GetComponent<GUIText>().text);
 
-		TitleStr = TitleText.guiText.text;
-		UnpausedStr = UnpauseText.guiText.text;
+		TitleStr = TitleText.GetComponent<GUIText>().text;
+		UnpausedStr = UnpauseText.GetComponent<GUIText>().text;
 
 		SwitchActive(false);
 	}
@@ -52,14 +52,14 @@ public class PauseScreen : MonoBehaviour {
 			if (paused) {
 				if (currentMenuState == MenuState.DEFAULT) {
 					for ( int i = 0; i < MenuOptionObjs.Count; i++) {
-						MenuOptionObjs[i].guiText.anchor = TextAnchor.UpperLeft;
+						MenuOptionObjs[i].GetComponent<GUIText>().anchor = TextAnchor.UpperLeft;
 						if (i == SelectedMenuOptionIndex) {
 							MenuOptionObjs[i].transform.position = new Vector3(SelectedMenuOptionX, MenuOptionObjs[i].transform.position.y, 0);
-							MenuOptionObjs[i].guiText.text = "> " + MenuOptionStrs[i];
+							MenuOptionObjs[i].GetComponent<GUIText>().text = "> " + MenuOptionStrs[i];
 						}
 						else {
 							MenuOptionObjs[i].transform.position = new Vector3(UnselectedMenuOptionX, MenuOptionObjs[i].transform.position.y, 0);
-							MenuOptionObjs[i].guiText.text = MenuOptionStrs[i];
+							MenuOptionObjs[i].GetComponent<GUIText>().text = MenuOptionStrs[i];
 						}
 					}
 
@@ -91,7 +91,7 @@ public class PauseScreen : MonoBehaviour {
 				}
 				else if (currentMenuState == MenuState.HELP) {
 					for ( int i = 0; i < MenuOptionCreditsStrs.Count; i++) {
-						MenuOptionObjs[i].guiText.text = MenuOptionHelpStrs[i];
+						MenuOptionObjs[i].GetComponent<GUIText>().text = MenuOptionHelpStrs[i];
 					}
 
 					if (inputDevice.Action2)
@@ -99,7 +99,7 @@ public class PauseScreen : MonoBehaviour {
 				}
 				else if (currentMenuState == MenuState.CREDITS) {
 					for ( int i = 0; i < MenuOptionCreditsStrs.Count; i++) {
-						MenuOptionObjs[i].guiText.text = MenuOptionCreditsStrs[i];
+						MenuOptionObjs[i].GetComponent<GUIText>().text = MenuOptionCreditsStrs[i];
 					}
 
 					if (inputDevice.Action2)
@@ -135,35 +135,35 @@ public class PauseScreen : MonoBehaviour {
 		currentMenuState = newMenuState;
 
 		if (newMenuState == MenuState.DEFAULT) {
-			TitleText.guiText.text = TitleStr;
-			UnpauseText.guiText.text = UnpausedStr;
+			TitleText.GetComponent<GUIText>().text = TitleStr;
+			UnpauseText.GetComponent<GUIText>().text = UnpausedStr;
 		}
 		else if (newMenuState == MenuState.HELP) {
-			TitleText.guiText.text = "Help";
-			UnpauseText.guiText.text = "Press <B> to Go Back";
+			TitleText.GetComponent<GUIText>().text = "Help";
+			UnpauseText.GetComponent<GUIText>().text = "Press <B> to Go Back";
 
 			for ( int i = 0; i < MenuOptionObjs.Count; i++) {
 				MenuOptionObjs[i].transform.position = new Vector3(NonDefaultMenuOptionX, MenuOptionObjs[i].transform.position.y, 0);
-				MenuOptionObjs[i].guiText.anchor = TextAnchor.UpperCenter;
+				MenuOptionObjs[i].GetComponent<GUIText>().anchor = TextAnchor.UpperCenter;
 
 				if (i >= MenuOptionHelpStrs.Count)
-					MenuOptionObjs[i].guiText.text = "";
+					MenuOptionObjs[i].GetComponent<GUIText>().text = "";
 				else 
-					MenuOptionObjs[i].guiText.text = MenuOptionHelpStrs[i];
+					MenuOptionObjs[i].GetComponent<GUIText>().text = MenuOptionHelpStrs[i];
 			}
 		}
 		else if (newMenuState == MenuState.CREDITS) {
-			TitleText.guiText.text = "Credits";
-			UnpauseText.guiText.text = "Press <B> to Go Back";
+			TitleText.GetComponent<GUIText>().text = "Credits";
+			UnpauseText.GetComponent<GUIText>().text = "Press <B> to Go Back";
 
 			for ( int i = 0; i < MenuOptionObjs.Count; i++) {
 				MenuOptionObjs[i].transform.position = new Vector3(NonDefaultMenuOptionX, MenuOptionObjs[i].transform.position.y, 0);
-				MenuOptionObjs[i].guiText.anchor = TextAnchor.UpperCenter;
+				MenuOptionObjs[i].GetComponent<GUIText>().anchor = TextAnchor.UpperCenter;
 
 				if (i >= MenuOptionCreditsStrs.Count)
-					MenuOptionObjs[i].guiText.text = "";
+					MenuOptionObjs[i].GetComponent<GUIText>().text = "";
 				else 
-					MenuOptionObjs[i].guiText.text = MenuOptionCreditsStrs[i];
+					MenuOptionObjs[i].GetComponent<GUIText>().text = MenuOptionCreditsStrs[i];
 			}
 		}
 	}

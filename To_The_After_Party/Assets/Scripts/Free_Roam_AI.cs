@@ -12,8 +12,8 @@ public class Free_Roam_AI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.rigidbody2D.velocity.magnitude <= StationarySpeed * 2) {
-			this.rigidbody2D.velocity = Vector2.zero;
+		if (this.GetComponent<Rigidbody2D>().velocity.magnitude <= StationarySpeed * 2) {
+			this.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		}
 	}
 }

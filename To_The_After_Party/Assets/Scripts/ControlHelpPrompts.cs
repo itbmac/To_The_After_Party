@@ -79,21 +79,21 @@ public class ControlHelpPrompts : MonoBehaviour {
 			}
 
 			if (!HasBeenUsedIndicator_LeftStick && (UnusedTime_LeftStick >= UnusedTimeLength_LeftStick)) {
-				GUITextObjs[0].guiText.text = "Use the left thumbstick to Move.";
+				GUITextObjs[0].GetComponent<GUIText>().text = "Use the left thumbstick to Move.";
 				GUITextObjs[0].SetActive(true);
 			}
 			else if (HasBeenUsedIndicator_LeftStick && (Time.time <= DisplayLengthAfterUse + UsedTime_LeftStick)) {
 				GUITextObjs[0].SetActive(false);
 			}
 			else if (!HasBeenUsedIndicator_RightStick && (UnusedTime_RightStick >= UnusedTimeLength_RightStick))  {
-				GUITextObjs[0].guiText.text = "Use the right thumbstick to aim.";
+				GUITextObjs[0].GetComponent<GUIText>().text = "Use the right thumbstick to aim.";
 				GUITextObjs[0].SetActive(true);
 			}
 			else if (HasBeenUsedIndicator_RightStick && (Time.time <= DisplayLengthAfterUse + UsedTime_RightStick)) {
 				GUITextObjs[0].SetActive(false);
 			}
 			else if (CanFire && !HasBeenUsedIndicator_RightTrigger && (UnusedTime_RightTrigger >= UnusedTimeLength_RightTrigger)) {
-				GUITextObjs[0].guiText.text = "Use the right trigger to fire.";
+				GUITextObjs[0].GetComponent<GUIText>().text = "Use the right trigger to fire.";
 				GUITextObjs[0].SetActive(true);
 			}
 			else if (HasBeenUsedIndicator_RightTrigger && (Time.time <= DisplayLengthAfterUse + UsedTime_RightTrigger)) {

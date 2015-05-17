@@ -22,9 +22,9 @@ public class Drag_Mechanic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (DraggedFriendObject != null) {
-			springJoint.connectedBody = DraggedFriendObject.rigidbody2D;
+			springJoint.connectedBody = DraggedFriendObject.GetComponent<Rigidbody2D>();
 
-			lineRenderer.SetPosition(0, rigidbody2D.transform.position);
+			lineRenderer.SetPosition(0, GetComponent<Rigidbody2D>().transform.position);
 			lineRenderer.SetPosition(1, DraggedFriendObject.transform.position);
 			lineRenderer.enabled = true;
 			springJoint.enabled = true;
@@ -50,7 +50,7 @@ public class Drag_Mechanic : MonoBehaviour {
 	}
 
 	bool CheckIfObjectInRange(GameObject target) {
-		Vector3 distBetween = this.rigidbody2D.transform.position - target.rigidbody2D.transform.position;
+		Vector3 distBetween = this.GetComponent<Rigidbody2D>().transform.position - target.GetComponent<Rigidbody2D>().transform.position;
 		
 		if (distBetween.magnitude < MaxDistanceToGrab) {
 			

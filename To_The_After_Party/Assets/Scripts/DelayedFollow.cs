@@ -14,7 +14,7 @@ public class DelayedFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 dist = player.rigidbody2D.transform.position - this.rigidbody2D.transform.position;
+		Vector3 dist = player.GetComponent<Rigidbody2D>().transform.position - this.GetComponent<Rigidbody2D>().transform.position;
 		DistToPlayer = dist.magnitude;
 		if (DistToPlayer <= DistanceToActivate) {
 			this.GetComponent<FollowPlayer>().enabled = true;
