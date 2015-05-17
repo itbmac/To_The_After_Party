@@ -1495,7 +1495,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 595076770}
-  - 95: {fileID: 595076771}
   m_Layer: 0
   m_Name: room
   m_TagString: Untagged
@@ -1521,24 +1520,6 @@ Transform:
   - {fileID: 427795730}
   m_Father: {fileID: 0}
   m_RootOrder: 2
---- !u!95 &595076771
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9559790, guid: 19dacf1ca47c266458433c4459979aa2,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 595076769}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 247830a61784ff34c9d2c1aebb8a8ca7, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &596703044
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,6 +2533,7 @@ GameObject:
   - 64: {fileID: 1199958614}
   - 23: {fileID: 1199958613}
   - 114: {fileID: 1199958617}
+  - 114: {fileID: 1199958618}
   m_Layer: 0
   m_Name: DrawablePainting
   m_TagString: Untagged
@@ -2637,6 +2619,18 @@ MonoBehaviour:
   OurBlue: {r: .196078435, g: .392156869, b: .862745106, a: 1}
   DefaultBrushRadius: 2
   PaintBallPrefab: {fileID: 135556, guid: 12aa0a6699d814d0e96e31c985b2196d, type: 2}
+--- !u!114 &1199958618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1199958612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd07d0da249621478d8a8b29618bd14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 2800000, guid: b17d665b88b12499294b89f3700063cd, type: 3}
 --- !u!1 &1204252662
 GameObject:
   m_ObjectHideFlags: 0
