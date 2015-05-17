@@ -19,6 +19,7 @@ public class LoadSettings : MonoBehaviour
 	// keep track of when the file has finished loading, and whether an error has occured
 	public bool fileReady = false; 
 	public bool fileError = false; 
+	public bool loadStarted = false;
 	
 	// data for the content
 	public Dictionary<string, string> dataPairs = new Dictionary<string,string>(); 
@@ -58,6 +59,7 @@ public class LoadSettings : MonoBehaviour
 	// load the file
 	void LoadFile (string filename)
 	{
+		loadStarted = true;
 		StartCoroutine ("TimeOut", timeOut); 
 		
 		// reformat the filepath

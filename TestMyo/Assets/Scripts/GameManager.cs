@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour {
 		
 		HUD.Instance.message = 0;
 		Cursor.visible = false;
+		
+		int duration = LoadSettings.GetInt("duration");
+		if (duration != -1)
+			TotalTime = duration;
 	}
 	
 	private void StartGame() {
@@ -51,7 +55,6 @@ public class GameManager : MonoBehaviour {
 			GameStartCallbacks();
 			
 		GetComponent<AudioSource>().PlayOneShot(PaintingBegin, 1);
-	
 	}
 	
 	private int lastTimeRemaining;
