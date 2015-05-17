@@ -20,13 +20,10 @@ public class Paintbrush {
 	
 	public enum State {Paint, Charge}
 	public State currentState = State.Paint;
-	
-	private Painting painting;
 
 	public Paintbrush(GameObject arm, Color color, Painting painting) {
 		this.MyColor = color;
 		this.arm = arm;
-		this.painting = painting;
 		
 		thalmicMyo = arm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
 	

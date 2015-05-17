@@ -6,7 +6,7 @@ public class CameraEntry : MonoBehaviour {
 	public float MOVEMENT_SPEED = 1.0f;
 
 	public Transform startCube, endCube;
-	public Transform camera;
+	public Transform myCamera;
 	public Transform hands;
 
 	private bool completed = false;
@@ -17,34 +17,35 @@ public class CameraEntry : MonoBehaviour {
 	void Start () {
 		hands.localPosition = new Vector3 (0.0f, -1.0f, 0.345f);
 		hands.localEulerAngles = new Vector3 (60.0f, 0.0f, 0.0f);
-		camera.position = startCube.position;
-		camera.eulerAngles = startCube.eulerAngles;
+		myCamera = Camera.main.transform;
+		myCamera.position = startCube.position;
+		myCamera.eulerAngles = startCube.eulerAngles;
 		Instance = this;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(!completed) {
-			camera.position = new Vector3 (Mathf.Lerp (camera.position.x, endCube.position.x, MOVEMENT_SPEED * Time.deltaTime),
-			                               Mathf.Lerp (camera.position.y, endCube.position.y, MOVEMENT_SPEED * Time.deltaTime),
-			                               Mathf.Lerp (camera.position.z, endCube.position.z, MOVEMENT_SPEED * Time.deltaTime));
-			camera.eulerAngles = new Vector3 (Mathf.Lerp (camera.eulerAngles.x, endCube.eulerAngles.x, MOVEMENT_SPEED * Time.deltaTime),
-			                                  Mathf.Lerp (camera.eulerAngles.y, endCube.eulerAngles.y, MOVEMENT_SPEED * Time.deltaTime),
-			                                  Mathf.Lerp (camera.eulerAngles.z, endCube.eulerAngles.z, MOVEMENT_SPEED * Time.deltaTime));
+			myCamera.position = new Vector3 (Mathf.Lerp (myCamera.position.x, endCube.position.x, MOVEMENT_SPEED * Time.deltaTime),
+			                               Mathf.Lerp (myCamera.position.y, endCube.position.y, MOVEMENT_SPEED * Time.deltaTime),
+			                               Mathf.Lerp (myCamera.position.z, endCube.position.z, MOVEMENT_SPEED * Time.deltaTime));
+			myCamera.eulerAngles = new Vector3 (Mathf.Lerp (myCamera.eulerAngles.x, endCube.eulerAngles.x, MOVEMENT_SPEED * Time.deltaTime),
+			                                  Mathf.Lerp (myCamera.eulerAngles.y, endCube.eulerAngles.y, MOVEMENT_SPEED * Time.deltaTime),
+			                                  Mathf.Lerp (myCamera.eulerAngles.z, endCube.eulerAngles.z, MOVEMENT_SPEED * Time.deltaTime));
           	
           	if (Input.GetKeyDown(KeyCode.Space)) {
-          		camera.position = endCube.position;
-				camera.eulerAngles = endCube.eulerAngles;
+          		myCamera.position = endCube.position;
+				myCamera.eulerAngles = endCube.eulerAngles;
           	}
 		}
-		if((camera.eulerAngles - endCube.eulerAngles).magnitude < 0.05) {
-			camera.eulerAngles = endCube.eulerAngles;
+		if((myCamera.eulerAngles - endCube.eulerAngles).magnitude < 0.05) {
+			myCamera.eulerAngles = endCube.eulerAngles;
 			completed = true;
 		}
 		hands.localPosition = new Vector3 (0.0f,
 		                                   Mathf.Lerp (hands.localPosition.y, -0.229f, MOVEMENT_SPEED * Time.deltaTime),
 		                                   0.3f);
-		hands.localEulerAngles = new Vector3 (Mathf.Lerp (camera.localEulerAngles.x, -10.0f, MOVEMENT_SPEED * Time.deltaTime),
+		hands.localEulerAngles = new Vector3 (Mathf.Lerp (myCamera.localEulerAngles.x, -10.0f, MOVEMENT_SPEED * Time.deltaTime),
 		                                      0.0f,
 		                                      0.0f);
 	}

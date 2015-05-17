@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#pragma warning disable
+
 public class CameraEffects : MonoBehaviour {
 
 	public Camera camera;
