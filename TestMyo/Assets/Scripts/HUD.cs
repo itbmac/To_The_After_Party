@@ -66,9 +66,9 @@ public class HUD : MonoBehaviour {
 
 		//draw the bar percentages
 		GUI.Label(new Rect( (int)(sw*.5f-sw*barSize.x-sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
-		                   (int)(sh*timerHUDSize.y)),((int)(redScore*100f)).ToString());
+		                   (int)(sh*timerHUDSize.y)),((int)(redScore*100f)).ToString()+"%");
 		GUI.Label(new Rect( (int)(sw*.5f+sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
-		                   (int)(sh*timerHUDSize.y)),((int)(blueScore*100f)).ToString());
+		                   (int)(sh*timerHUDSize.y)),((int)(blueScore*100f)).ToString()+"%");
 		
 		//draw the hud timer
 		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*timerHUDSize.x*.5f), (int)(sh*barPos.y-sh*timerHUDSize.y*.5f), (int)(sw*timerHUDSize.x), 
