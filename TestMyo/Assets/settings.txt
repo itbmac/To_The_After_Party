@@ -1,1 +1,2 @@
+# how long the game lasts in seconds
 duration=60
