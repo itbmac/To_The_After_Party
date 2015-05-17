@@ -36,9 +36,7 @@ public class GameManager : MonoBehaviour {
 	
 	void Start() {
 		if (!ThalmicHub.instance.hubInitialized)
-			Debug.Log ("detected hub not initialized");
-		else
-			Debug.Log("hub is good");
+			Debug.LogWarning("Hub not initialized");
 		
 		HUD.Instance.message = 0;
 		Cursor.visible = false;
