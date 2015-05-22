@@ -96,6 +96,9 @@ public class Painting : MonoBehaviour {
     void Paint(Paintbrush brush) {
     	if (brush.currentState != Paintbrush.State.Paint)
     		return;
+    	
+    	if (!brush.IsRunning())
+    		return;
 		
 		Vector2? possibleHit = GetUVHit(brush.GetRay());
 		if (possibleHit == null)

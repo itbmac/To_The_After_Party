@@ -15,6 +15,8 @@ public class JointOrientation : MonoBehaviour
     // Myo game object to connect with.
     // This object must have a ThalmicMyo script attached.
     public GameObject myo = null;
+    
+    
 
     // A rotation that compensates for the Myo armband's orientation parallel to the ground, i.e. yaw.
     // Once set, the direction the Myo armband is facing becomes "forward" within the program.
@@ -37,19 +39,31 @@ public class JointOrientation : MonoBehaviour
     private bool initialResetPerformed = false;
     private bool notElbowWarningGiven = false;
     
+	ThalmicMyo thalmicMyo;
+	
+	public bool IsRunning = true;
+    public bool HideWhenMyoMissing = true;
+    
     void OnGameStart() {
 		initialResetPerformed = false;
     }
     
-    void Start() {
+    void Start() {    
 		GameManager.Instance.GameStartCallbacks += OnGameStart;
+		
+		thalmicMyo = myo.GetComponent<ThalmicMyo> ();
+		
+		if (!thalmicMyo.isPaired && HideWhenMyoMissing) {
+			IsRunning = false;
+			gameObject.SetActive(false);
+		}
     }
 
     // Update is called once per frame.
     void Update ()
     {
         // Access the ThalmicMyo component attached to the Myo object.
-        ThalmicMyo thalmicMyo = myo.GetComponent<ThalmicMyo> ();
+        
 
         // Update references when the pose becomes fingers spread or the q key is pressed.
         bool updateReference = false;

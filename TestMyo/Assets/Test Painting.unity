@@ -2644,7 +2644,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!82 &1145346870
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3793,6 +3793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myo: {fileID: 1997378349}
   Accel: {x: 0, y: 0, z: 0}
+  IsRunning: 1
+  HideWhenMyoMissing: 0
 --- !u!1 &1500145452
 GameObject:
   m_ObjectHideFlags: 0
@@ -5653,6 +5655,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myo: {fileID: 1025336185}
   Accel: {x: 0, y: 0, z: 0}
+  IsRunning: 1
+  HideWhenMyoMissing: 1
 --- !u!1 &2109737638
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,15 +20,22 @@ public class Paintbrush {
 	
 	public enum State {Paint, Charge}
 	public State currentState = State.Paint;
+	
+	JointOrientation jointOrientation;
 
 	public Paintbrush(GameObject arm, Color color, Painting painting) {
 		this.MyColor = color;
 		this.arm = arm;
 		
-		thalmicMyo = arm.GetComponent<JointOrientation>().myo.GetComponent<ThalmicMyo> ();
+		jointOrientation = arm.GetComponent<JointOrientation>();
+		thalmicMyo = jointOrientation.myo.GetComponent<ThalmicMyo> ();
 	
 		GameObject reticle = (GameObject)GameObject.Instantiate(GameManager.Instance.Reticle);
 		reticle.GetComponent<Reticle>().Initialize(arm, painting.gameObject, color);
+	}
+	
+	public bool IsRunning() {
+		return jointOrientation.IsRunning;
 	}
 	
 	public Ray GetRay() {
