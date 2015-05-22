@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour {
 	public AudioClip BlueWins;
 	public AudioClip PaintingBegin;
 	
+	public bool OnePlayerMode {
+		get; private set;
+	}
+	
 	void Awake() {
 		CurrentState = GameState.NotStarted;
 		Instance = this;
@@ -44,6 +48,11 @@ public class GameManager : MonoBehaviour {
 		int duration = LoadSettings.GetInt("duration");
 		if (duration != -1)
 			TotalTime = duration;
+		
+		int onePlayerModeSetting = LoadSettings.GetInt ("one_player_mode");
+		if (onePlayerModeSetting == 1) {
+			OnePlayerMode = true;
+		}
 	}
 	
 	private void StartGame() {

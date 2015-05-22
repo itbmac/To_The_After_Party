@@ -9,3 +9,5 @@ duration=60
 
 # autosave a screenshot on game over
 save_screenshot_on_game_over=1
+
+one_player_mode=0
