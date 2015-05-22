@@ -1,2 +1,11 @@
 # how long the game lasts in seconds
 duration=60
+
+# optionally set a custom screenshot directory
+# (remove the # to uncomment)
+# otherwise, screenshots are saved to the game directory.
+# Don't put a trailing / at the end.
+# screenshot_directory=/Users/myo
+
+# autosave a screenshot on game over
+save_screenshot_on_game_over=1

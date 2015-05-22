@@ -205,15 +205,14 @@ public class LoadSettings : MonoBehaviour
 	
 	public static string GetString (string id)
 	{
-		id = id.ToLower().Trim(); 
-		
+		id = id.ToLower().Trim();		
 		
 		if (instance == null)
-			return ""; 
+			return null; 
 		
 		bool keyExists = (instance.dataPairs.ContainsKey (id)); 
 		if (!keyExists)
-			return ""; 
+			return null;
 		
 		string dataForKey = instance.dataPairs[id]; 
 		

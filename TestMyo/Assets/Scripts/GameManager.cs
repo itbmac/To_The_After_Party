@@ -126,6 +126,13 @@ public class GameManager : MonoBehaviour {
 					HUD.Instance.message = 4;
 				}
 				
+				var shouldSaveScreenshot = LoadSettings.GetInt("save_screenshot_on_game_over");
+				if (shouldSaveScreenshot == 1) {
+					// don't just convert to bool, because needs to be not -1
+					// which indicates setting not found
+					Screenshot.Instance.SavePainting();
+				}
+				
 				// TODO: HUD - press space to restart
 			}
 		}

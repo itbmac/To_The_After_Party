@@ -68,7 +68,7 @@ public class Paintbrush {
 	
 	void CheckColorSelectorHit() {
 		RaycastHit hit;
-		var results = Physics.Raycast(GetRay(), out hit, Mathf.Infinity, LayerMask.GetMask("ColorSelector"));
+		Physics.Raycast(GetRay(), out hit, Mathf.Infinity, LayerMask.GetMask("ColorSelector"));
 		if (hit.collider != null) {
 			var newColor = hit.collider.GetComponent<ColorSelector>().MyColor;
 			MyColor = newColor;
