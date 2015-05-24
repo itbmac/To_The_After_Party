@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -29,10 +29,8 @@ public class GameManager : MonoBehaviour {
 	public AudioClip BlueWins;
 	public AudioClip PaintingBegin;
 	
-	public bool OnePlayerMode {
-		get; private set;
-	}
-	
+	public static bool OnePlayerMode;
+
 	void Awake() {
 		CurrentState = GameState.NotStarted;
 		Instance = this;
@@ -48,11 +46,15 @@ public class GameManager : MonoBehaviour {
 		int duration = LoadSettings.GetInt("duration");
 		if (duration != -1)
 			TotalTime = duration;
-		
+
+		/*
 		int onePlayerModeSetting = LoadSettings.GetInt ("one_player_mode");
 		if (onePlayerModeSetting == 1) {
 			OnePlayerMode = true;
+		} else {
+			OnePlayerMode = false;
 		}
+		*/
 	}
 	
 	private void StartGame() {
@@ -104,34 +106,21 @@ public class GameManager : MonoBehaviour {
 			if (timeRemaining <= 30 && lastTimeRemaining > 30) {
 				// 30 seconds left!
 				GetComponent<AudioSource>().PlayOneShot(ThirtySecondsLeft, 1);
-				
-				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining <= 15 && lastTimeRemaining > 15) {
 				// 15 seconds left!
 				GetComponent<AudioSource>().PlayOneShot(FifteenSecondsLeft, 1);
-				
-				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining <= 5 && lastTimeRemaining > 5) {
 				// 5 seconds left!
 				GetComponent<AudioSource>().PlayOneShot(FiveSecondsLeft, 1);
-				
-				// TODO: sound, maybe HUD message?
 			} else if (timeRemaining == 0) {
-				// TODO: game over
-				
 				CurrentState = GameState.Over;
 				if (Painting.Instance.RedScore > Painting.Instance.BlueScore) {
 					// red wins
 					GetComponent<AudioSource>().PlayOneShot(RedWins, 1);
-					
-					// TODO: HUD and sound
-					
 					HUD.Instance.message = 3;
 				} else {
 					// blue wins (break ties to blue)
 					GetComponent<AudioSource>().PlayOneShot(BlueWins, 1);
-					
-					// TODO: HUD and sound
 					HUD.Instance.message = 4;
 				}
 				
@@ -141,8 +130,6 @@ public class GameManager : MonoBehaviour {
 					// which indicates setting not found
 					Screenshot.Instance.SavePainting();
 				}
-				
-				// TODO: HUD - press space to restart
 			}
 		}
 		

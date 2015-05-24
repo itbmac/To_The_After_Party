@@ -9,12 +9,7 @@ public class ColorSelector : MyMonoBehaviour {
 	void Start () {
 		renderer.material = Instantiate(renderer.material);
 		renderer.material.color = MyColor;
-		
-		renderer.enabled = GameManager.Instance.OnePlayerMode;
+		renderer.enabled = GameManager.OnePlayerMode;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

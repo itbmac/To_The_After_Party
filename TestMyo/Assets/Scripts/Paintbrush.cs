@@ -87,7 +87,7 @@ public class Paintbrush {
 	bool chargeSwingStarted;
 	bool downSinceLastThrow;
 	public void Update() {
-		if (GameManager.Instance.OnePlayerMode)
+		if (GameManager.OnePlayerMode)
 			CheckColorSelectorHit();
 	
 		if (!GameManager.Instance.BlobsEnabled)

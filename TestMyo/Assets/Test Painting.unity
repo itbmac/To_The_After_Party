@@ -1615,7 +1615,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 496534, guid: a26037ffc183b1c4fa961b53b2cc7831, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a26037ffc183b1c4fa961b53b2cc7831, type: 2}
@@ -3338,7 +3338,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: bd5fb9de2386749819df9bd5c2c4b2fd, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd5fb9de2386749819df9bd5c2c4b2fd, type: 2}
@@ -3794,7 +3794,7 @@ MonoBehaviour:
   myo: {fileID: 1997378349}
   Accel: {x: 0, y: 0, z: 0}
   IsRunning: 1
-  HideWhenMyoMissing: 0
+  onePlayerHand: 0
 --- !u!1 &1500145452
 GameObject:
   m_ObjectHideFlags: 0
@@ -4702,8 +4702,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 482750, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11433588, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
+      propertyPath: onePlayerHand
+      value: 
+      objectReference: {fileID: 2104809085}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
   m_IsPrefabParent: 0
@@ -5656,7 +5660,7 @@ MonoBehaviour:
   myo: {fileID: 1025336185}
   Accel: {x: 0, y: 0, z: 0}
   IsRunning: 1
-  HideWhenMyoMissing: 1
+  onePlayerHand: 1
 --- !u!1 &2109737638
 GameObject:
   m_ObjectHideFlags: 0

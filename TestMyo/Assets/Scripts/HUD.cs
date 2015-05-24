@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HUD : MonoBehaviour {
@@ -37,8 +37,6 @@ public class HUD : MonoBehaviour {
 	void Awake() {
 		Instance = this;
 	}
-
-	//setup:
 	void Start () { 
 		sw = Screen.width; sh = Screen.height;
 	}
@@ -52,23 +50,26 @@ public class HUD : MonoBehaviour {
 		//update screen width and height if it changes
 		sw = Screen.width; sh = Screen.height;
 
-		//draw back sides
-		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
-		                         (int)(sw*barSize.x), (int)(sh*barSize.y)), redBack, ScaleMode.StretchToFill);
-		GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x), 
-		                         (int)(sh*barSize.y)), blueBack, ScaleMode.StretchToFill);
+		//if gameMode is multiplayer competitive
+		if(!GameManager.OnePlayerMode) {
+			//draw back sides
+			GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
+			                         (int)(sw*barSize.x), (int)(sh*barSize.y)), redBack, ScaleMode.StretchToFill);
+			GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x), 
+			                         (int)(sh*barSize.y)), blueBack, ScaleMode.StretchToFill);
 
-		//draw bars
-		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x*(redScore)-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
-		                         (int)(sw*barSize.x*redScore), (int)(sh*barSize.y)), redBar, ScaleMode.StretchToFill);
-		GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x*blueScore), 
-		                         (int)(sh*barSize.y)), blueBar, ScaleMode.StretchToFill);
-
-		//draw the bar percentages
-		GUI.Label(new Rect( (int)(sw*.5f-sw*barSize.x-sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
-		                   (int)(sh*timerHUDSize.y)),((int)(redScore*100f)).ToString()+"%");
-		GUI.Label(new Rect( (int)(sw*.5f+sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
-		                   (int)(sh*timerHUDSize.y)),((int)(blueScore*100f)).ToString()+"%");
+			//draw bars
+			GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x*(redScore)-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
+			                         (int)(sw*barSize.x*redScore), (int)(sh*barSize.y)), redBar, ScaleMode.StretchToFill);
+			GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x*blueScore), 
+			                         (int)(sh*barSize.y)), blueBar, ScaleMode.StretchToFill);
+			
+			//draw the bar percentages
+			GUI.Label(new Rect( (int)(sw*.5f-sw*barSize.x-sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
+			                   (int)(sh*timerHUDSize.y)),((int)(redScore*100f)).ToString()+"%");
+			GUI.Label(new Rect( (int)(sw*.5f+sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 
+			                   (int)(sh*timerHUDSize.y)),((int)(blueScore*100f)).ToString()+"%");
+		}
 		
 		//draw the hud timer
 		GUI.DrawTexture(new Rect((int)(sw*.5f-sw*timerHUDSize.x*.5f), (int)(sh*barPos.y-sh*timerHUDSize.y*.5f), (int)(sw*timerHUDSize.x), 
