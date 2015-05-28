@@ -1,5 +1,5 @@
 # how long the game lasts in seconds
-duration=5
+duration=60
 
 # optionally set a custom screenshot directory
 # (remove the # to uncomment)

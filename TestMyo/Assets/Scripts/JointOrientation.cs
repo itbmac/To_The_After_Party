@@ -41,6 +41,7 @@ public class JointOrientation : MonoBehaviour
 	
 	public bool IsRunning = true;
     public bool onePlayerHand;
+    public bool AutoPilot = false;
 
     void OnGameStart() {
 		doUpdateReference();
@@ -113,22 +114,31 @@ public class JointOrientation : MonoBehaviour
         if (updateReference) {
             doUpdateReference();
         }
+        
+		var fwd = myo.transform.forward;
+		var up = myo.transform.up;
+        if (AutoPilot && Application.isEditor) {
+			var myoRot = Random.rotation;
+			up = myoRot * Vector3.up;
+			fwd = myoRot * Vector3.forward;
+		};
+		
 
         // Current zero roll vector and roll value.
-        Vector3 zeroRoll = computeZeroRollVector (myo.transform.forward);
-        float roll = rollFromZero (zeroRoll, myo.transform.forward, myo.transform.up);
+		Vector3 zeroRoll = computeZeroRollVector (fwd);
+        float roll = rollFromZero (zeroRoll, fwd, up);
 
         // The relative roll is simply how much the current roll has changed relative to the reference roll.
         // adjustAngle simply keeps the resultant value within -180 to 180 degrees.
         float relativeRoll = normalizeAngle (roll - _referenceRoll);
 
         // antiRoll represents a rotation about the myo Armband's forward axis adjusting for reference roll.
-        Quaternion antiRoll = Quaternion.AngleAxis (relativeRoll, myo.transform.forward);
+        Quaternion antiRoll = Quaternion.AngleAxis (relativeRoll, fwd);
 
         // Here the anti-roll and yaw rotations are applied to the myo Armband's forward direction to yield
         // the orientation of the joint.
         
-		Quaternion newRotation = _antiYaw * antiRoll * Quaternion.LookRotation (myo.transform.forward);
+		Quaternion newRotation = _antiYaw * antiRoll * Quaternion.LookRotation (fwd);
 		if (!float.IsNaN(newRotation.x))
 	        transform.rotation = newRotation;		
 

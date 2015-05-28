@@ -40,6 +40,16 @@ public class HUD : MonoBehaviour {
 	void Start () { 
 		sw = Screen.width; sh = Screen.height;
 	}
+	
+	Color TransformColorBar(Color c) {
+		// TODO
+		return c;
+	}
+	
+	Color TransformColorSide(Color c) {
+		// TODO
+		return c;
+	}
 
 	//Draw the HUD:
 	void OnGUI() {
@@ -52,17 +62,23 @@ public class HUD : MonoBehaviour {
 
 		//if gameMode is multiplayer competitive
 		if(!GameManager.OnePlayerMode) {
+			
 			//draw back sides
+			GUI.color = TransformColorSide(Painting.Instance.OurRed);
 			GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
 			                         (int)(sw*barSize.x), (int)(sh*barSize.y)), redBack, ScaleMode.StretchToFill);
+			GUI.color = TransformColorSide(Painting.Instance.OurBlue);
 			GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x), 
 			                         (int)(sh*barSize.y)), blueBack, ScaleMode.StretchToFill);
 
 			//draw bars
+			GUI.color = TransformColorBar(Painting.Instance.OurRed);
 			GUI.DrawTexture(new Rect((int)(sw*.5f-sw*barSize.x*(redScore)-sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), 
 			                         (int)(sw*barSize.x*redScore), (int)(sh*barSize.y)), redBar, ScaleMode.StretchToFill);
+			GUI.color = TransformColorBar(Painting.Instance.OurBlue);
 			GUI.DrawTexture(new Rect((int)(sw*.5f+sw*barPos.x), (int)(sh*barPos.y-sh*barSize.y*.5f), (int)(sw*barSize.x*blueScore), 
 			                         (int)(sh*barSize.y)), blueBar, ScaleMode.StretchToFill);
+			GUI.color = Color.white;
 			
 			//draw the bar percentages
 			GUI.Label(new Rect( (int)(sw*.5f-sw*barSize.x-sw*barPos.x) , (int)(sh*barPos.y-sh*timerSize.y*.5f) , (int)(sw*barSize.x), 

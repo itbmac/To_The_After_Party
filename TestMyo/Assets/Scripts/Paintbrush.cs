@@ -90,7 +90,7 @@ public class Paintbrush {
 		if (GameManager.OnePlayerMode)
 			CheckColorSelectorHit();
 	
-		if (!GameManager.Instance.BlobsEnabled)
+		if (!GameManager.Instance.BlobsEnabled || jointOrientation.AutoPilot)
 			return;
 			
 		if (!GameManager.Instance.BlobsUseGestures) {

@@ -40,10 +40,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textSkin: {fileID: 11400000, guid: ea13f4ba41c24ab4485ef24a0eb7f92a, type: 2}
-  redBar: {fileID: 2800000, guid: a7e6348996eea9a48aca1bbdd0c97bdc, type: 3}
-  redBack: {fileID: 2800000, guid: 5f110a4a703536043bf79fc513fbb443, type: 3}
-  blueBar: {fileID: 2800000, guid: a5b75104e8271114da1881de1294c448, type: 3}
-  blueBack: {fileID: 2800000, guid: 79e24e38d9e0b5a489c2ef8d29a859b3, type: 3}
+  redBar: {fileID: 2800000, guid: 18651206b0dc548708aadc8f90225494, type: 3}
+  redBack: {fileID: 2800000, guid: 0217af4baaf2140129df53919c918d49, type: 3}
+  blueBar: {fileID: 2800000, guid: 4efca34bf19854e5b88867cabaeb0e91, type: 3}
+  blueBack: {fileID: 2800000, guid: 91abeb9728b7147c0b5fca894994d517, type: 3}
   timerHUD: {fileID: 2800000, guid: d2026dc4126ce4b459c664ea3f0e0c56, type: 3}
   messages:
   - {fileID: 2800000, guid: c4bf84c66584c8b46a0563e63a876bb2, type: 3}
@@ -71,4 +71,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 196534}
   m_IsPrefabParent: 1
-  m_IsExploded: 1
