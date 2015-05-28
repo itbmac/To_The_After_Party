@@ -9,3 +9,6 @@ duration=60
 
 # autosave a screenshot on game over
 save_screenshot_on_game_over=1
+
+# does making a fist stop you from painting?
+fist_to_withdraw=0

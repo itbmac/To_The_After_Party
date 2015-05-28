@@ -35,7 +35,7 @@ public class Paintbrush {
 	}
 	
 	public bool IsRunning() {
-		return jointOrientation.IsRunning;
+		return jointOrientation.IsRunning && (thalmicMyo.pose != Pose.Fist || LoadSettings.GetInt("fist_to_withdraw") != 1);
 	}
 	
 	public Ray GetRay() {
