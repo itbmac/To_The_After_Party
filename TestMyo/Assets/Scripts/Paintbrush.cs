@@ -35,7 +35,12 @@ public class Paintbrush {
 	}
 	
 	public bool IsRunning() {
-		return jointOrientation.IsRunning && (thalmicMyo.pose != Pose.Fist || LoadSettings.GetInt("fist_to_withdraw") != 1);
+		var isMakingFist = thalmicMyo.pose == Pose.Fist;
+		var result = jointOrientation.IsRunning && !jointOrientation.FistOverride && (!GameManager.OnePlayerMode || !isMakingFist || LoadSettings.GetInt("fist_to_withdraw") != 1);
+		if (!result)
+			ConnectToLastPixel = false;
+		
+		return result;
 	}
 	
 	public Ray GetRay() {

@@ -42,6 +42,7 @@ public class JointOrientation : MonoBehaviour
 	public bool IsRunning = true;
     public bool onePlayerHand;
     public bool AutoPilot = false;
+    public bool FistOverride = false;
 
     void OnGameStart() {
 		doUpdateReference();
@@ -73,6 +74,9 @@ public class JointOrientation : MonoBehaviour
 		Vector3 referenceZeroRoll = computeZeroRollVector (myo.transform.forward);
 		_referenceRoll = rollFromZero (referenceZeroRoll, myo.transform.forward, myo.transform.up);
     }
+    
+    Quaternion lastAutopilot;
+    float lastAutopilotTime;
 
     // Update is called once per frame.
     void Update ()
@@ -118,7 +122,13 @@ public class JointOrientation : MonoBehaviour
 		var fwd = myo.transform.forward;
 		var up = myo.transform.up;
         if (AutoPilot && Application.isEditor) {
-			var myoRot = Random.rotation;
+			if (Time.time - lastAutopilotTime > 2.0f) {
+				var t = Quaternion.Slerp(Random.rotation, Quaternion.identity, 0.75f);
+				lastAutopilot = Quaternion.Slerp(lastAutopilot, t, 0.5f);
+				lastAutopilotTime = Time.time;
+			}
+        
+			var myoRot = lastAutopilot;
 			up = myoRot * Vector3.up;
 			fwd = myoRot * Vector3.forward;
 		};
