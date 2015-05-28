@@ -12,3 +12,7 @@ save_screenshot_on_game_over=1
 
 # does making a fist stop you from painting?
 fist_to_withdraw=0
+
+# initialize each paintbrush to a random color?
+# (chosen from 1-player color palette)
+random_colors=0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 using LockingPolicy = Thalmic.Myo.LockingPolicy;
 using Pose = Thalmic.Myo.Pose;
@@ -20,6 +21,7 @@ public class Painting : MonoBehaviour {
 	
 	public Color OurRed = new Color32(220, 30, 30, 255);
 	public Color OurBlue = new Color32(50, 100, 220, 255);
+//	public Color[] RandomColors = new Color[] {new Color32(220, 30, 30, 255), new Color32(50, 100, 220, 255)};
 	
 	public int DefaultBrushRadius = 2;
 	
@@ -32,6 +34,15 @@ public class Painting : MonoBehaviour {
 	
   	void Start() {  	
 		tex = GetComponent<Renderer>().material.mainTexture as Texture2D;
+			
+		if (LoadSettings.GetInt("random_colors") == 1) {
+			var randomized = FindObjectsOfType<ColorSelector>().Select(x => x.MyColor).AsRandom().ToArray();
+			if (randomized.Length < 2)
+				Debug.LogError("Need at least 2 color selectors");
+				
+			OurRed = randomized[0];
+			OurBlue = randomized[1];
+		}
 
 		LeftBrush = new Paintbrush(LeftArm, OurRed, this);
 		RightBrush = new Paintbrush(RightArm, OurBlue, this);
