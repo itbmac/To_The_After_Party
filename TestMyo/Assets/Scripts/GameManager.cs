@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	
 	public static GameManager Instance;
 	
-	public Action GameStartCallbacks;
+	public event Action GameStartCallbacks;
 	
 	public AudioClip FiveSecondsLeft;
 	public AudioClip FifteenSecondsLeft;

@@ -43,7 +43,7 @@ public class JointOrientation : MonoBehaviour
     public bool onePlayerHand;
 
     void OnGameStart() {
-		initialResetPerformed = false;
+		doUpdateReference();
     }
     
     void Start() {    
@@ -52,6 +52,25 @@ public class JointOrientation : MonoBehaviour
 		thalmicMyo = myo.GetComponent<ThalmicMyo> ();
 		
 		displayHand(GameManager.OnePlayerMode);
+    }
+    
+    void doUpdateReference() {
+		// _antiYaw represents a rotation of the Myo armband about the Y axis (up) which aligns the forward
+		// vector of the rotation with Z = 1 when the wearer's arm is pointing in the reference direction.
+		_antiYaw = Quaternion.FromToRotation (
+			new Vector3 (myo.transform.forward.x, 0, myo.transform.forward.z),
+			new Vector3 (0, 0, 1)
+			);
+		
+		// CONTINUE HERE:: ANTI PITCH
+		
+		// _referenceRoll represents how many degrees the Myo armband is rotated clockwise
+		// about its forward axis (when looking down the wearer's arm towards their hand) from the reference zero
+		// roll direction. This direction is calculated and explained below. When this reference is
+		// taken, the joint will be rotated about its forward axis such that it faces upwards when
+		// the roll value matches the reference.
+		Vector3 referenceZeroRoll = computeZeroRollVector (myo.transform.forward);
+		_referenceRoll = rollFromZero (referenceZeroRoll, myo.transform.forward, myo.transform.up);
     }
 
     // Update is called once per frame.
@@ -92,22 +111,7 @@ public class JointOrientation : MonoBehaviour
         // Update references. This anchors the joint on-screen such that it faces forward away
         // from the viewer when the Myo armband is oriented the way it is when these references are taken.
         if (updateReference) {
-            // _antiYaw represents a rotation of the Myo armband about the Y axis (up) which aligns the forward
-            // vector of the rotation with Z = 1 when the wearer's arm is pointing in the reference direction.
-            _antiYaw = Quaternion.FromToRotation (
-                new Vector3 (myo.transform.forward.x, 0, myo.transform.forward.z),
-                new Vector3 (0, 0, 1)
-            );
-            
-            // CONTINUE HERE:: ANTI PITCH
-
-            // _referenceRoll represents how many degrees the Myo armband is rotated clockwise
-            // about its forward axis (when looking down the wearer's arm towards their hand) from the reference zero
-            // roll direction. This direction is calculated and explained below. When this reference is
-            // taken, the joint will be rotated about its forward axis such that it faces upwards when
-            // the roll value matches the reference.
-            Vector3 referenceZeroRoll = computeZeroRollVector (myo.transform.forward);
-            _referenceRoll = rollFromZero (referenceZeroRoll, myo.transform.forward, myo.transform.up);
+            doUpdateReference();
         }
 
         // Current zero roll vector and roll value.
