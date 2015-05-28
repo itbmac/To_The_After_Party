@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour {
 	public AudioClip PaintingBegin;
 	
 	public static bool OnePlayerMode;
+	
+	bool doubleTapFlag;
 
 	void Awake() {
 		CurrentState = GameState.NotStarted;
@@ -68,6 +70,16 @@ public class GameManager : MonoBehaviour {
 		GetComponent<AudioSource>().PlayOneShot(PaintingBegin, 1);
 	}
 	
+	public void SetDoubleTapFlag() {
+		doubleTapFlag = true;
+	}
+	
+	public bool GetDoubleTapFlag() {
+		var v = doubleTapFlag;
+		doubleTapFlag = false;
+		return v;
+	}
+	
 	private int lastTimeRemaining;
 	
 	// Update is called once per frame
@@ -92,17 +104,17 @@ public class GameManager : MonoBehaviour {
 			foreach (Transform t in ThalmicHub.instance.transform) {
 				allSynced = allSynced && t.GetComponent<ThalmicMyo>().armSynced;
 			}
-			if (allSynced || Input.GetKeyDown(KeyCode.Space)) {
+			if (allSynced || Input.GetKeyDown(KeyCode.Space) || GetDoubleTapFlag()) {
 				CurrentState = GameState.WaitForStart;
 				HUD.Instance.message = 2;
 			}
 		} else if (CurrentState == GameState.WaitForStart) {
 		
-			if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyDown(KeyCode.Space) || GetDoubleTapFlag()) {
 				StartGame ();
 			}
 			
-		} if (CurrentState == GameState.Running) {
+		} else if (CurrentState == GameState.Running) {
 			if (timeRemaining <= 30 && lastTimeRemaining > 30) {
 				// 30 seconds left!
 				GetComponent<AudioSource>().PlayOneShot(ThirtySecondsLeft, 1);

@@ -30,7 +30,7 @@ public class JointOrientation : MonoBehaviour
     // The pose from the last update. This is used to determine if the pose has changed
     // so that actions are only performed upon making them rather than every frame during
     // which they are active.
-//    private Pose _lastPose = Pose.Unknown;
+    private Pose _lastPose = Pose.Unknown;
     
     public Vector3 Accel;
     
@@ -67,15 +67,24 @@ public class JointOrientation : MonoBehaviour
 			initialResetPerformed = true;
 		}
         
-//        if (thalmicMyo.pose != _lastPose) {
-//            _lastPose = thalmicMyo.pose;
-//
+        if (thalmicMyo.pose != _lastPose) {
+            _lastPose = thalmicMyo.pose;
+            
+            if (_lastPose == Pose.DoubleTap) {
+            	if (GameManager.Instance.CurrentState == GameManager.GameState.Running) {
+					updateReference = true;
+            	} else {
+            		GameManager.Instance.SetDoubleTapFlag();
+            	}
+            }
+
 //            if (thalmicMyo.pose == Pose.FingersSpread) {
 //                updateReference = true;
 //
 //                ExtendUnlockAndNotifyUserAction(thalmicMyo);
 //            }
-//        }
+        }
+        
         if (Input.GetKeyDown ("r")) {
             updateReference = true;
         }

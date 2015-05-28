@@ -33,7 +33,7 @@ public class CameraEntry : MonoBehaviour {
 			                                  Mathf.Lerp (myCamera.eulerAngles.y, endCube.eulerAngles.y, MOVEMENT_SPEED * Time.deltaTime),
 			                                  Mathf.Lerp (myCamera.eulerAngles.z, endCube.eulerAngles.z, MOVEMENT_SPEED * Time.deltaTime));
           	
-          	if (Input.GetKeyDown(KeyCode.Space)) {
+          	if (Input.GetKeyDown(KeyCode.Space) /* || GameManager.Instance.GetDoubleTapFlag() */) {
           		myCamera.position = endCube.position;
 				myCamera.eulerAngles = endCube.eulerAngles;
           	}
