@@ -23,6 +23,11 @@ public class ResetScript : MonoBehaviour {
 				Application.LoadLevel(Application.loadedLevel);
 			}	
 		}
+		
+		if(gameManagerScript.CurrentState == GameManager.GameState.Over && gameManagerScript.GetDoubleTapFlag()) {
+			Application.LoadLevel(Application.loadedLevel);
+		}	
+		
 		if (gameManagerScript.CurrentState == GameManager.GameState.Running &&
 			Input.GetKey(KeyCode.Space) && Time.time - spaceDown > 1) {
 			Application.LoadLevel(Application.loadedLevel);
