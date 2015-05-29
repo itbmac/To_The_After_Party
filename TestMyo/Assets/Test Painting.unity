@@ -1613,6 +1613,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11496534, guid: a26037ffc183b1c4fa961b53b2cc7831, type: 2}
+      propertyPath: messages.Array.data[3]
+      value: 
+      objectReference: {fileID: 2800000, guid: 2d247c58c89a4412bab49b4a7a7feb0e, type: 3}
+    - target: {fileID: 11496534, guid: a26037ffc183b1c4fa961b53b2cc7831, type: 2}
+      propertyPath: messages.Array.data[4]
+      value: 
+      objectReference: {fileID: 2800000, guid: 6e13aebe544a4445e86ceb88736ca987, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a26037ffc183b1c4fa961b53b2cc7831, type: 2}
   m_IsPrefabParent: 0
@@ -3792,6 +3800,7 @@ MonoBehaviour:
   IsRunning: 1
   onePlayerHand: 0
   AutoPilot: 0
+  FistOverride: 0
 --- !u!1 &1500145452
 GameObject:
   m_ObjectHideFlags: 0
@@ -4705,6 +4714,14 @@ Prefab:
       propertyPath: onePlayerHand
       value: 
       objectReference: {fileID: 2104809085}
+    - target: {fileID: 11482750, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
+      propertyPath: RedWins
+      value: 
+      objectReference: {fileID: 8300000, guid: efbaf236e2c6643f79aadbf21fbe445e, type: 3}
+    - target: {fileID: 11482750, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
+      propertyPath: BlueWins
+      value: 
+      objectReference: {fileID: 8300000, guid: 8782f802581b04e45a10a77bb038b7c3, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea73c1b01e5c246fb82cebc66d69a548, type: 2}
   m_IsPrefabParent: 0
@@ -5659,6 +5676,7 @@ MonoBehaviour:
   IsRunning: 1
   onePlayerHand: 1
   AutoPilot: 0
+  FistOverride: 0
 --- !u!1 &2109737638
 GameObject:
   m_ObjectHideFlags: 0
